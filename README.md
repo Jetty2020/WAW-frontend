@@ -16,7 +16,7 @@
 |                |     User Profile     |   Get user profile    |   Soon   |
 |                |     Update User      |                       |   Soon   |
 |                |                      |        Logout         |   Soon   |
-| **Post**       |       Landing        |                       |   Soon   |
+| **Post**       |    Landing(Home)     |                       |   Soon   |
 |                |     Create Post      |                       |   Soon   |
 |                |     Search Post      |                       |   Soon   |
 |                |     Post detail      |    Get Post detail    |   Soon   |
@@ -25,8 +25,10 @@
 |                |          =           |    Delete Comment     |   Soon   |
 |                | Posts sort by artist |                       |   Soon   |
 |                |      Edit Post       |                       |   Soon   |
-| **Other**      |                      |        Router         |   Soon   |
+| **Other**      |                      |        Router         |  Done!   |
+|                |                      |     Global styles     |   Soon   |
 |                |                      |     Apollo config     |   Soon   |
 |                |                      |        Helmet         |   Soon   |
+|                |                      |       Not found       |   Soon   |
 |                |                      |        Nav bar        |   Soon   |
 |                |                      |        Footer         |   Soon   |
