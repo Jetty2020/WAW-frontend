@@ -26,9 +26,11 @@
 |                | Posts sort by artist |                       |   Soon   |
 |                |      Edit Post       |                       |   Soon   |
 | **Other**      |                      |        Router         |  Done!   |
+|                |                      |     Apollo config     |  Done!   |
 |                |                      |     Global styles     |   Soon   |
-|                |                      |     Apollo config     |   Soon   |
+|                |                      |    Apollo codegen     |   Soon   |
 |                |                      |        Helmet         |   Soon   |
 |                |                      |       Not found       |   Soon   |
+|                |                      |         Arch.         |   Soon   |
 |                |                      |        Nav bar        |   Soon   |
 |                |                      |        Footer         |   Soon   |
