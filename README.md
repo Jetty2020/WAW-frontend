@@ -27,9 +27,9 @@
 |                |      Edit Post       |                       |   Soon   |
 | **Other**      |                      |        Router         |  Done!   |
 |                |                      |     Apollo config     |  Done!   |
-|                |                      |     Global styles     |   Soon   |
+|                |                      |     Global styles     |  Done!   |
+|                |                      |        Helmet         |  Done!   |
 |                |                      |    Apollo codegen     |   Soon   |
-|                |                      |        Helmet         |   Soon   |
 |                |                      |       Not found       |   Soon   |
 |                |                      |         Arch.         |   Soon   |
 |                |                      |        Nav bar        |   Soon   |
