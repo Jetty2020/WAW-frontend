@@ -1,6 +1,18 @@
 import React from 'react';
+import { gql } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../components/PageTitle';
+import { LoginInput } from '../__generated__/globalTypes';
+
+export const LOGIN_MUTATION = gql`
+  mutation loginMutation($loginInput: LoginInput!) {
+    login(input: $loginInput) {
+      ok
+      token
+      error
+    }
+  }
+`;
 
 const Login = () => {
   const {
@@ -8,7 +20,7 @@ const Login = () => {
     getValues,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm({
+  } = useForm<LoginInput>({
     mode: 'onChange',
   });
   const onSubmit = () => {
