@@ -2,13 +2,8 @@ import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../components/PageTitle';
-import { LoginInput } from '../__generated__/globalTypes';
-import {
-  loginMutation,
-  loginMutationVariables,
-} from '../__generated__/loginMutation';
-import { LOCALSTORAGE_TOKEN } from '../constants';
-import { authTokenVar, isLoggedInVar } from '../apollo';
+import { CreateAccountInput, UserRole } from '../__generated__/globalTypes';
+import { isLoggedInVar } from '../apollo';
 import Button from '../components/atoms/Button';
 import ErrorForm from '../components/atoms/ErrorForm';
 import AuthInput from '../components/auth/AuthInput';
@@ -19,18 +14,21 @@ import Form from '../components/auth/Form';
 import Logo from '../components/atoms/Logo';
 import AuthContainer from '../components/auth/AuthContainer';
 import { useHistory } from 'react-router-dom';
+import {
+  createAccountMutation,
+  createAccountMutationVariables,
+} from '../__generated__/createAccountMutation';
 
-const LOGIN_MUTATION = gql`
-  mutation loginMutation($loginInput: LoginInput!) {
-    login(input: $loginInput) {
+const CREATEACCOUNT_MUTATION = gql`
+  mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
+    createAccount(input: $createAccountInput) {
       ok
-      token
       error
     }
   }
 `;
 
-const Login = () => {
+const Join = () => {
   const history = useHistory();
   if (isLoggedInVar()) history.push('/');
   const {
@@ -38,33 +36,35 @@ const Login = () => {
     getValues,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<LoginInput>({
+  } = useForm<CreateAccountInput>({
     mode: 'onChange',
   });
-  const onCompleted = (data: loginMutation) => {
+  const onCompleted = (data: createAccountMutation) => {
     const {
-      login: { ok, token },
+      createAccount: { ok },
     } = data;
-    if (ok && token) {
-      localStorage.setItem(LOCALSTORAGE_TOKEN, token);
-      authTokenVar(token);
-      isLoggedInVar(true);
-      history.push('/');
+    if (ok) {
+      history.push('/login');
     }
   };
-  const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
-    loginMutation,
-    loginMutationVariables
-  >(LOGIN_MUTATION, {
-    onCompleted,
-  });
+  const [
+    createAccountMutation,
+    { data: createAccountMutationResult, loading },
+  ] = useMutation<createAccountMutation, createAccountMutationVariables>(
+    CREATEACCOUNT_MUTATION,
+    {
+      onCompleted,
+    }
+  );
   const onSubmit = () => {
     if (!loading) {
-      const { email, password } = getValues();
-      loginMutation({
+      const { email, password, nickname } = getValues();
+      createAccountMutation({
         variables: {
-          loginInput: {
+          createAccountInput: {
             email,
+            nickname,
+            role: UserRole.Guest,
             password,
           },
         },
@@ -73,25 +73,34 @@ const Login = () => {
   };
   return (
     <AuthContainer>
-      <PageTitle title="Login" />
-      <AuthHeader>Login to WAW</AuthHeader>
+      <PageTitle title="Join" />
+      <AuthHeader>Join to WAW</AuthHeader>
       <FormContainer>
         <Logo margin=" 0 0 1rem" src="/mona.jpeg" />
-        {loginMutationResult?.login.error && (
-          <ErrorForm eText={loginMutationResult.login.error} />
+        {createAccountMutationResult?.createAccount.error && (
+          <ErrorForm eText={createAccountMutationResult.createAccount.error} />
         )}
         {errors.email?.type === 'pattern' && (
           <ErrorForm eText="메일 주소가 올바르지 않습니다." />
         )}
         {errors.email?.message && <ErrorForm eText={errors.email?.message} />}
+        {errors.nickname?.message && (
+          <ErrorForm eText={errors.nickname?.message} />
+        )}
+        {errors.nickname?.type === 'minLength' && (
+          <ErrorForm eText="Username은 4 ~ 13자리 입니다." />
+        )}
+        {errors.nickname?.type === 'maxLength' && (
+          <ErrorForm eText="Username은 4 ~ 13자리 입니다." />
+        )}
         {errors.password?.message && (
           <ErrorForm eText={errors.password?.message} />
         )}
         {errors.password?.type === 'minLength' && (
-          <ErrorForm eText='비밀번호는 5 ~ 15자리 입니다.' />
+          <ErrorForm eText="비밀번호는 5 ~ 15자리 입니다." />
         )}
         {errors.password?.type === 'maxLength' && (
-          <ErrorForm eText='비밀번호는 5 ~ 15자리 입니다.' />
+          <ErrorForm eText="비밀번호는 5 ~ 15자리 입니다." />
         )}
         <Form onSubmit={handleSubmit(onSubmit)}>
           <InputLabel htmlFor="email">Email</InputLabel>
@@ -106,6 +115,18 @@ const Login = () => {
             type="email"
             className="input"
           />
+          <InputLabel htmlFor="nickname">Username</InputLabel>
+          <AuthInput
+            {...register('nickname', {
+              required: 'Username이 비어있습니다.',
+              maxLength: 13,
+              minLength: 4,
+            })}
+            id="nickname"
+            name="nickname"
+            type="text"
+            className="input"
+          />
           <InputLabel htmlFor="password">Password</InputLabel>
           <AuthInput
             {...register('password', {
@@ -118,11 +139,15 @@ const Login = () => {
             type="password"
             className="input"
           />
-          <Button canClick={isValid} loading={loading} actionText={'Log in'} />
+          <Button
+            canClick={isValid}
+            loading={loading}
+            actionText={'Create Account'}
+          />
         </Form>
       </FormContainer>
     </AuthContainer>
   );
 };
 
-export default Login;
+export default Join;

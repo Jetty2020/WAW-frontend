@@ -29,7 +29,6 @@ const RightNav = styled.div`
 
 const LoginButton = styled.div`
   color: #6b7280;
-  font-family: 'Inter', sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
@@ -41,7 +40,6 @@ const LoginButton = styled.div`
 const JoinButton = styled.button`
   color: ${(props) => props.theme.color.white};
   background-color: ${(props) => props.theme.color.blue};
-  font-family: 'Inter', sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   padding: 0.75rem 2rem;

@@ -22,6 +22,7 @@ const StyledButton = styled.button<IButtonProps>`
           pointer-events: none;
         `}
   font-size: 0.875rem;
+  font-weight: 500;
   border: none;
   color: ${props => props.theme.color.white};
   border-radius: 0.375rem;

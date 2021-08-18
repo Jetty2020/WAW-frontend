@@ -29,7 +29,8 @@ export const GlobalStyles = createGlobalStyle`
     background-color: ${props => {
       return props.theme.color.white;
     }};
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
+    /* font-family: 'Open Sans', sans-serif; */
     /* font-family: 'Noto Sans KR', sans-serif; */
     color: #2c2c2c;
   }

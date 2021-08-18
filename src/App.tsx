@@ -10,6 +10,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'styled-components';
 import { theme, GlobalStyles } from './styles/golobalStyles';
 import Layout from './components/Layout';
+import Join from './pages/Join';
 
 function App() {
   return (
@@ -27,6 +28,11 @@ function App() {
               <Route path={routes.login} exact>
                 <Layout>
                   <Login />
+                </Layout>
+              </Route>
+              <Route path={routes.join} exact>
+                <Layout>
+                  <Join />
                 </Layout>
               </Route>
               <Route>
