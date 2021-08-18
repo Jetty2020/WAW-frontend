@@ -8,9 +8,9 @@ const Container = styled.div`
   width: 100%;
   padding: 2rem 2.5rem;
   margin: 0 1rem;
-  border: 1px solid lightgray;
+  border: 1px solid #d3d3d3;
   border-radius: 0.5rem;
-  background-color: #fafafa;
+  background-color: ${props => props.theme.color.white};
   box-shadow: 0 5px 18px -7px rgba(0, 0, 0, 1);
 `;
 

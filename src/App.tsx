@@ -8,7 +8,7 @@ import NotFound from './pages/NotFound';
 import routes from './routes';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'styled-components';
-import { theme, GlobalStyles } from './styles';
+import { theme, GlobalStyles } from './styles/golobalStyles';
 
 function App() {
   return (

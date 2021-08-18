@@ -6,7 +6,7 @@ const AuthContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: #f9fafb;
+  background-color: ${props => props.theme.color.lightgray};
 `;
 
 export default AuthContainer;

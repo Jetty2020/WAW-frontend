@@ -12,9 +12,9 @@ const StyledButton = styled.button<IButtonProps>`
   ${(props) =>
     props.canClick
       ? css`
-          background-color: #2563eb;
+          background-color: ${props => props.theme.color.blue};
           &:hover {
-            background-color: #4789f5;
+            background-color: ${props => props.theme.color.lightblue};
           }
         `
       : css`
@@ -23,7 +23,7 @@ const StyledButton = styled.button<IButtonProps>`
         `}
   font-size: 0.875rem;
   border: none;
-  color: #ffffff;
+  color: ${props => props.theme.color.white};
   border-radius: 0.375rem;
 `;
 
