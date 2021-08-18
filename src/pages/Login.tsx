@@ -16,7 +16,7 @@ import InputLabel from '../components/auth/InputLabel';
 import AuthHeader from '../components/auth/AuthHeader';
 import FormContainer from '../components/auth/FormContainer';
 import Form from '../components/auth/Form';
-import Logo from '../components/auth/Logo';
+import Logo from '../components/atoms/Logo';
 import AuthContainer from '../components/auth/AuthContainer';
 import { useHistory } from 'react-router-dom';
 
@@ -76,7 +76,7 @@ const Login = () => {
       <PageTitle title="Login" />
       <AuthHeader>Login to WAW</AuthHeader>
       <FormContainer>
-        <Logo />
+        <Logo margin=" 0 0 1rem" src="/mona.jpeg" />
         {loginMutationResult?.login.error && (
           <ErrorForm eText={loginMutationResult.login.error} />
         )}

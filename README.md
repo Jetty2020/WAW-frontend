@@ -12,10 +12,10 @@
 | Classification |         Page         | Function or component | Progress |
 | :------------- | :------------------: | :-------------------: | :------: |
 | **User**       |    Create Account    |                       |   Soon   |
-|                |        Login         |                       |   Soon   |
+|                |        Login         |                       |  Done!   |
 |                |     User Profile     |   Get user profile    |   Soon   |
 |                |     Update User      |                       |   Soon   |
-|                |                      |        Logout         |   Soon   |
+|                |                      |        Logout         |  Done!   |
 | **Post**       |    Landing(Home)     |                       |   Soon   |
 |                |     Create Post      |                       |   Soon   |
 |                |     Search Post      |                       |   Soon   |
@@ -29,8 +29,8 @@
 |                |                      |     Apollo config     |  Done!   |
 |                |                      |     Global styles     |  Done!   |
 |                |                      |        Helmet         |  Done!   |
-|                |                      |    Apollo codegen     |   Soon   |
+|                |                      |    Apollo codegen     |  Done!   |
 |                |                      |       Not found       |   Soon   |
 |                |                      |         Arch.         |   Soon   |
-|                |                      |        Nav bar        |   Soon   |
+|                |                      |        Nav bar        |  Done!   |
 |                |                      |        Footer         |   Soon   |

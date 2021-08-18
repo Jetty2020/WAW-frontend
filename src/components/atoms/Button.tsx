@@ -31,9 +31,8 @@ const Button: React.FC<IButtonProps> = ({
   canClick,
   loading,
   actionText,
-  ...props
 }) => (
-  <StyledButton canClick={canClick} {...props}>
+  <StyledButton canClick={canClick}>
     {loading ? 'Loading...' : actionText}
   </StyledButton>
 );

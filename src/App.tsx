@@ -9,6 +9,7 @@ import routes from './routes';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'styled-components';
 import { theme, GlobalStyles } from './styles/golobalStyles';
+import Layout from './components/Layout';
 
 function App() {
   return (
@@ -19,13 +20,19 @@ function App() {
           <Router>
             <Switch>
               <Route path={routes.home} exact>
-                <Home />
+                <Layout>
+                  <Home />
+                </Layout>
               </Route>
               <Route path={routes.login} exact>
-                <Login />
+                <Layout>
+                  <Login />
+                </Layout>
               </Route>
               <Route>
-                <NotFound />
+                <Layout>
+                  <NotFound />
+                </Layout>
               </Route>
             </Switch>
           </Router>
