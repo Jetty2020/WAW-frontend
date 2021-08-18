@@ -9,6 +9,16 @@ import {
 } from '../__generated__/loginMutation';
 import { LOCALSTORAGE_TOKEN } from '../constants';
 import { authTokenVar, isLoggedInVar } from '../apollo';
+import Button from '../components/atoms/Button';
+import ErrorForm from '../components/atoms/ErrorForm';
+import AuthInput from '../components/auth/AuthInput';
+import InputLabel from '../components/auth/InputLabel';
+import AuthHeader from '../components/auth/AuthHeader';
+import FormContainer from '../components/auth/FormContainer';
+import Form from '../components/auth/Form';
+import Logo from '../components/auth/Logo';
+import AuthContainer from '../components/auth/AuthContainer';
+import { useHistory } from 'react-router-dom';
 
 const LOGIN_MUTATION = gql`
   mutation loginMutation($loginInput: LoginInput!) {
@@ -21,6 +31,8 @@ const LOGIN_MUTATION = gql`
 `;
 
 const Login = () => {
+  const history = useHistory();
+  if (isLoggedInVar()) history.push('/');
   const {
     register,
     getValues,
@@ -37,6 +49,7 @@ const Login = () => {
       localStorage.setItem(LOCALSTORAGE_TOKEN, token);
       authTokenVar(token);
       isLoggedInVar(true);
+      history.push('/');
     }
   };
   const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
@@ -59,42 +72,48 @@ const Login = () => {
     }
   };
   return (
-    <div>
+    <AuthContainer>
       <PageTitle title="Login" />
-      <div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <input
+      <AuthHeader>Login to WAW</AuthHeader>
+      <FormContainer>
+        <Logo />
+        {loginMutationResult?.login.error && (
+          <ErrorForm eText={loginMutationResult.login.error} />
+        )}
+        {errors.email?.type === 'pattern' && (
+          <ErrorForm eText="메일 주소가 올바르지 않습니다." />
+        )}
+        {errors.email?.message && <ErrorForm eText={errors.email?.message} />}
+        {errors.password?.message && (
+          <ErrorForm eText={errors.password?.message} />
+        )}
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <InputLabel htmlFor="email">Email</InputLabel>
+          <AuthInput
             {...register('email', {
               required: '메일 작서칸이 비어있습니다.',
               pattern:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             })}
+            id="email"
             name="email"
             type="email"
-            placeholder="Email"
             className="input"
           />
-          {errors.email?.type === 'pattern' && (
-            <div>메일 주소가 올바르지 않습니다.</div>
-          )}
-          {errors.email?.message && <div>{errors.email?.message}</div>}
-          <input
+          <InputLabel htmlFor="password">Password</InputLabel>
+          <AuthInput
             {...register('password', {
               required: '비밀번호 작성칸이 비어있습니다.',
             })}
+            id="password"
             name="password"
             type="password"
-            placeholder="Password"
             className="input"
           />
-          {errors.password?.message && <div>{errors.password?.message}</div>}
-          {loginMutationResult?.login.error && (
-            <div>{loginMutationResult.login.error}</div>
-          )}
-          <button>Log in </button>
-        </form>
-      </div>
-    </div>
+          <Button canClick={isValid} loading={loading} actionText={'Log in'} />
+        </Form>
+      </FormContainer>
+    </AuthContainer>
   );
 };
 

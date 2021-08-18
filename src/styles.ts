@@ -4,8 +4,8 @@ import { normalize } from 'styled-normalize';
 export const theme = {
   accent: "#0095f6",
   green: "#079768",
-  deepBlue: "rgb(29, 78, 216)",
-  blue: "rgb(59, 130, 246)",
+  deepBlue: "#1d4ed8",
+  blue: "#3b82f6",
   red: "#d63031",
   gray: "#b2bec3",
 };
@@ -21,7 +21,8 @@ export const GlobalStyles = createGlobalStyle`
   }
   body {
     background-color: #FAFAFA;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    /* font-family: 'Noto Sans KR', sans-serif; */
     color: #2c2c2c;
   }
   a {
