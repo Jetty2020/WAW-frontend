@@ -5,9 +5,8 @@
 - Frontend
   ![Generic badge](https://img.shields.io/badge/React-17.0.2-61DAFB.svg) ![Generic badge](https://img.shields.io/badge/typescript-4.3.5-3178C6.svg) ![Generic badge](https://img.shields.io/badge/apollo-3.4.7-311C87.svg) ![Generic badge](https://img.shields.io/badge/graphql-15.5.1-E434AA.svg)![Generic badge](https://img.shields.io/badge/Styled_Components-5.3.0-CC6699.svg)
 
-## Core features
-
 ---
+## Core features
 
 | Classification |         Page         | Function or component | Progress |
 | :------------- | :------------------: | :-------------------: | :------: |
@@ -20,9 +19,9 @@
 |                |     Create Post      |                       |   Soon   |
 |                |     Search Post      |                       |   Soon   |
 |                |     Post detail      |    Get Post detail    |   Soon   |
-|                |          =           |      Toggle Like      |   Soon   |
-|                |          =           |    Create Comment     |   Soon   |
-|                |          =           |    Delete Comment     |   Soon   |
+|                |          "           |      Toggle Like      |   Soon   |
+|                |          "           |    Create Comment     |   Soon   |
+|                |          "           |    Delete Comment     |   Soon   |
 |                | Posts sort by artist |                       |   Soon   |
 |                |      Edit Post       |                       |   Soon   |
 | **Other**      |                      |        Router         |  Done!   |

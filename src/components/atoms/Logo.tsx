@@ -1,5 +1,4 @@
-import { Settings } from 'http2';
-import React, { ImgHTMLAttributes } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const StyledLogo = styled.img<StyleProps>`

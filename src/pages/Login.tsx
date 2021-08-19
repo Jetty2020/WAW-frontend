@@ -9,7 +9,7 @@ import {
 } from '../__generated__/loginMutation';
 import { LOCALSTORAGE_TOKEN } from '../constants';
 import { authTokenVar, isLoggedInVar } from '../apollo';
-import Button from '../components/atoms/Button';
+import AuthButton from '../components/auth/AuthButton';
 import ErrorForm from '../components/atoms/ErrorForm';
 import AuthInput from '../components/auth/AuthInput';
 import InputLabel from '../components/auth/InputLabel';
@@ -118,7 +118,7 @@ const Login = () => {
             type="password"
             className="input"
           />
-          <Button canClick={isValid} loading={loading} actionText={'Log in'} />
+          <AuthButton canClick={isValid} loading={loading} actionText={'Log in'} />
         </Form>
       </FormContainer>
     </AuthContainer>

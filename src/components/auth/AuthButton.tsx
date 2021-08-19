@@ -1,20 +1,23 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-interface IButtonProps {
-  canClick: boolean;
-  loading?: boolean;
-  actionText?: string;
+interface IButtonStyleProps {
+  canClick?: boolean;
 }
 
-const StyledButton = styled.button<IButtonProps>`
+interface IButtonProps extends IButtonStyleProps {
+  loading?: boolean;
+  actionText: string;
+}
+
+const StyledButton = styled.button<IButtonStyleProps>`
   padding: 0.5rem 1rem;
   ${(props) =>
     props.canClick
       ? css`
-          background-color: ${props => props.theme.color.blue};
+          background-color: ${(props) => props.theme.color.blue};
           &:hover {
-            background-color: ${props => props.theme.color.lightblue};
+            background-color: ${(props) => props.theme.color.lightblue};
           }
         `
       : css`
@@ -24,11 +27,11 @@ const StyledButton = styled.button<IButtonProps>`
   font-size: 0.875rem;
   font-weight: 500;
   border: none;
-  color: ${props => props.theme.color.white};
+  color: ${(props) => props.theme.color.white};
   border-radius: 0.375rem;
 `;
 
-const Button: React.FC<IButtonProps> = ({
+const AuthButton: React.FC<IButtonProps> = ({
   canClick,
   loading,
   actionText,
@@ -38,4 +41,4 @@ const Button: React.FC<IButtonProps> = ({
   </StyledButton>
 );
 
-export default Button;
+export default AuthButton;
