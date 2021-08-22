@@ -5,7 +5,7 @@ import PageTitle from '../components/PageTitle';
 import { CreateAccountInput, UserRole } from '../__generated__/globalTypes';
 import { isLoggedInVar } from '../apollo';
 import AuthButton from '../components/auth/AuthButton';
-import ErrorForm from '../components/atoms/ErrorForm';
+import ErrorForm from '../components/auth/ErrorForm';
 import AuthInput from '../components/auth/AuthInput';
 import InputLabel from '../components/auth/InputLabel';
 import AuthHeader from '../components/auth/AuthHeader';

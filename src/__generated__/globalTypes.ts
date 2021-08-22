@@ -24,6 +24,10 @@ export interface LoginInput {
   password: string;
 }
 
+export interface PostsInput {
+  page?: number | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

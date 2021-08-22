@@ -10,7 +10,7 @@ import {
 import { LOCALSTORAGE_TOKEN } from '../constants';
 import { authTokenVar, isLoggedInVar } from '../apollo';
 import AuthButton from '../components/auth/AuthButton';
-import ErrorForm from '../components/atoms/ErrorForm';
+import ErrorForm from '../components/auth/ErrorForm';
 import AuthInput from '../components/auth/AuthInput';
 import InputLabel from '../components/auth/InputLabel';
 import AuthHeader from '../components/auth/AuthHeader';

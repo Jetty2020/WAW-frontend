@@ -33,4 +33,3 @@
 |                |                      |       Not found       |  Done!   |
 |                |                      |         Arch.         |  Done!   |
 |                |                      |        Nav bar        |  Done!   |
-|                |                      |        Footer         |   Soon   |
