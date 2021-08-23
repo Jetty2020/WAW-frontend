@@ -1,12 +1,18 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../components/PageTitle';
+import { BsHeartFill, BsHeart } from 'react-icons/bs';
 import {
   postDetailQuery,
   postDetailQueryVariables,
 } from '../__generated__/postDetailQuery';
+import {
+  toggleLikeMutation,
+  toggleLikeMutationVariables,
+} from '../__generated__/toggleLikeMutation';
+import { client } from '../apollo';
 
 interface IParams {
   postId: string;
@@ -36,6 +42,15 @@ const POST_DETAIL_QUERY = gql`
         likesNum
         isLike
       }
+    }
+  }
+`;
+
+const TOGGLE_LIKE_MUTATION = gql`
+  mutation toggleLikeMutation($toggleLikeInput: ToggleLikeInput!) {
+    toggleLike(input: $toggleLikeInput) {
+      ok
+      error
     }
   }
 `;
@@ -71,7 +86,7 @@ const WriterBox = styled.div`
 const DotBox = styled.div`
   font-weight: 500;
   @media screen and (max-width: 500px) {
-    display: none
+    display: none;
   }
 `;
 
@@ -81,7 +96,7 @@ const DateBox = styled.div`
   color: gray;
   margin-left: 0.5rem;
   @media screen and (max-width: 500px) {
-    display: none
+    display: none;
   }
 `;
 const MadeCon = styled.div`
@@ -97,7 +112,7 @@ const MadeYear = styled.div`
   color: gray;
   margin-left: 0.75rem;
   @media screen and (max-width: 500px) {
-    display: none
+    display: none;
   }
 `;
 const ImgCon = styled.div`
@@ -130,6 +145,42 @@ const PostDesc = styled.div`
   }
 `;
 
+const LikeBtnCon = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+  position: fixed;
+  top: 35%;
+  left: 10%;
+  width: 4rem;
+  border-radius: 2rem;
+  background-color: #eff1f2;
+`;
+
+const LikeBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid gray;
+  border-radius: 1.5rem;
+  background-color: ${(props) => props.theme.color.white};
+  cursor: pointer;
+  &:hover {
+    border-color: ${(props) => props.theme.color.red};
+    color: ${(props) => props.theme.color.red};
+  }
+`;
+
+const LikeNum = styled.div`
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+`;
+
 const PostDetail: React.FC = () => {
   const { postId } = useParams<IParams>();
   const { data, loading } = useQuery<postDetailQuery, postDetailQueryVariables>(
@@ -142,10 +193,51 @@ const PostDetail: React.FC = () => {
       },
     }
   );
+  const onCompleted = (toggleLikeData: toggleLikeMutation) => {
+    const {
+      toggleLike: { ok },
+    } = toggleLikeData;
+    if (ok) {
+      const postIdCashe = `Post:${postId}`;
+      client.cache.modify({
+        id: postIdCashe,
+        fields: {
+          isLike(prev) {
+            return !prev;
+          },
+          likesNum(prev) {
+            if (data?.postDetail.post?.isLike) {
+              return prev - 1;
+            }
+            return prev + 1;
+          },
+        },
+      });
+    }
+  };
+  const [toggleLikeMutation] = useMutation<
+    toggleLikeMutation,
+    toggleLikeMutationVariables
+  >(TOGGLE_LIKE_MUTATION, {
+    variables: {
+      toggleLikeInput: { postId: +postId },
+    },
+    onCompleted,
+  });
   // console.log(loading, data);
   // console.log(postId);
   return (
     <Container>
+      <LikeBtnCon>
+        <LikeBtn onClick={() => toggleLikeMutation()}>
+          {data?.postDetail.post?.isLike ? (
+            <BsHeartFill size="1.5rem" />
+          ) : (
+            <BsHeart size="1.5rem" />
+          )}
+        </LikeBtn>
+        <LikeNum>{data?.postDetail.post?.likesNum}</LikeNum>
+      </LikeBtnCon>
       <PageTitle title={data?.postDetail.post?.title ?? 'Post'} />
       {!loading ? (
         <PostCon>
@@ -168,11 +260,13 @@ const PostDetail: React.FC = () => {
               )}일`}</DateBox>
             </PostedCon>
             <MadeCon>
-              <Link to={`/made-by/${data?.postDetail.post?.artist?.id}`}>
-                <ArtistName>
-                  {data?.postDetail.post?.artist?.name ?? '작자 미상'}
-                </ArtistName>
-              </Link>
+              {data?.postDetail.post?.artist?.name ? (
+                <Link to={`/made-by/${data?.postDetail.post?.artist?.id}`}>
+                  <ArtistName>{data?.postDetail.post?.artist?.name}</ArtistName>
+                </Link>
+              ) : (
+                <ArtistName>작자 미상</ArtistName>
+              )}
               <MadeYear>
                 {data?.postDetail.post?.year
                   ? `제작년도: ${data?.postDetail.post?.year}`

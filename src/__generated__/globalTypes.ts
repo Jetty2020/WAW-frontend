@@ -32,6 +32,10 @@ export interface PostsInput {
   page?: number | null;
 }
 
+export interface ToggleLikeInput {
+  postId: number;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

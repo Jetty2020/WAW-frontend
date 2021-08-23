@@ -20,7 +20,8 @@
 |                |     Create Post      |                       |   Soon   |
 |                |     Search Post      |                       |   Soon   |
 |                |     Post detail      |    Get Post detail    |  Done!   |
-|                |          "           |      Toggle Like      |   Soon   |
+|                |          "           |      Toggle Like      |  Done!   |
+|                |          "           |      Get Comment      |   Soon   |
 |                |          "           |    Create Comment     |   Soon   |
 |                |          "           |    Delete Comment     |   Soon   |
 |                | Posts sort by artist |                       |   Soon   |
