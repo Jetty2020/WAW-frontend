@@ -16,10 +16,10 @@
 |                |     User Profile     |   Get user profile    |   Soon   |
 |                |     Update User      |                       |   Soon   |
 |                |                      |        Logout         |  Done!   |
-| **Post**       |    Landing(Home)     |                       |   Soon   |
+| **Post**       |    Landing(Home)     |                       |  Done!   |
 |                |     Create Post      |                       |   Soon   |
 |                |     Search Post      |                       |   Soon   |
-|                |     Post detail      |    Get Post detail    |   Soon   |
+|                |     Post detail      |    Get Post detail    |  Done!   |
 |                |          "           |      Toggle Like      |   Soon   |
 |                |          "           |    Create Comment     |   Soon   |
 |                |          "           |    Delete Comment     |   Soon   |

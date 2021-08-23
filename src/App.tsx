@@ -11,6 +11,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme, GlobalStyles } from './styles/golobalStyles';
 import Layout from './components/Layout';
 import Join from './pages/Join';
+import PostDetail from './pages/PostDetail';
 
 function App() {
   return (
@@ -23,6 +24,11 @@ function App() {
               <Route path={routes.home} exact>
                 <Layout>
                   <Home />
+                </Layout>
+              </Route>
+              <Route path={routes.postDetail} exact>
+                <Layout>
+                  <PostDetail />
                 </Layout>
               </Route>
               <Route path={routes.login} exact>

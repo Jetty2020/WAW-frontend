@@ -24,6 +24,10 @@ export interface LoginInput {
   password: string;
 }
 
+export interface PostDetailInput {
+  postId: number;
+}
+
 export interface PostsInput {
   page?: number | null;
 }
