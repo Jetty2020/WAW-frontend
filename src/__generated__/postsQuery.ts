@@ -25,14 +25,10 @@ export interface postsQuery_posts_results {
   __typename: "Post";
   id: number;
   title: string;
-  createdAt: any;
   imgUrl: string;
-  artist: postsQuery_posts_results_artist | null;
-  year: number | null;
-  desc: string | null;
-  writer: postsQuery_posts_results_writer;
   likesNum: number;
-  isLike: boolean;
+  artist: postsQuery_posts_results_artist | null;
+  writer: postsQuery_posts_results_writer;
 }
 
 export interface postsQuery_posts {

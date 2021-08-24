@@ -23,16 +23,16 @@ export interface postDetailQuery_postDetail_post_writer {
 
 export interface postDetailQuery_postDetail_post {
   __typename: "Post";
+  desc: string | null;
+  year: number | null;
+  createdAt: any;
+  isLike: boolean;
   id: number;
   title: string;
-  year: number | null;
-  desc: string | null;
-  createdAt: any;
   imgUrl: string;
+  likesNum: number;
   artist: postDetailQuery_postDetail_post_artist | null;
   writer: postDetailQuery_postDetail_post_writer;
-  likesNum: number;
-  isLike: boolean;
 }
 
 export interface postDetailQuery_postDetail {

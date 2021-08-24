@@ -13,6 +13,7 @@ import {
   toggleLikeMutationVariables,
 } from '../__generated__/toggleLikeMutation';
 import { client } from '../apollo';
+import { POST_FRAGMENT } from '../fragments';
 
 interface IParams {
   postId: string;
@@ -23,27 +24,15 @@ const POST_DETAIL_QUERY = gql`
       ok
       error
       post {
-        id
-        title
-        year
         desc
+        year
         createdAt
-        imgUrl
-        artist {
-          id
-          name
-        }
-        year
-        desc
-        writer {
-          id
-          nickname
-        }
-        likesNum
         isLike
+        ...PostParts
       }
     }
   }
+  ${POST_FRAGMENT}
 `;
 
 const TOGGLE_LIKE_MUTATION = gql`

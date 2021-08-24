@@ -11,6 +11,7 @@ import HomeContainer from '../components/home/HomeContainer';
 import ListContainer from '../components/home/ListContainer';
 import PostList from '../components/home/PostList';
 import NoMorePost from '../components/home/NoMorePost';
+import { POST_FRAGMENT } from '../fragments';
 
 const POSTS_QUERY = gql`
   query postsQuery($postsInput: PostsInput!) {
@@ -20,25 +21,11 @@ const POSTS_QUERY = gql`
       totalPages
       totalResults
       results {
-        id
-        title
-        createdAt
-        imgUrl
-        artist {
-          id
-          name
-        }
-        year
-        desc
-        writer {
-          id
-          nickname
-        }
-        likesNum
-        isLike
+        ...PostParts
       }
     }
   }
+  ${POST_FRAGMENT}
 `;
 
 const Home = () => {
