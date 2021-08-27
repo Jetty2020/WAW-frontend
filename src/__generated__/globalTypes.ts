@@ -19,6 +19,11 @@ export interface CreateAccountInput {
   role: UserRole;
 }
 
+export interface CreateCommentInput {
+  content?: string | null;
+  postId?: number | null;
+}
+
 export interface LoginInput {
   email: string;
   password: string;

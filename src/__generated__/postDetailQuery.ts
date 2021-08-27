@@ -9,6 +9,20 @@ import { PostDetailInput } from "./globalTypes";
 // GraphQL query operation: postDetailQuery
 // ====================================================
 
+export interface postDetailQuery_postDetail_post_comments_user {
+  __typename: "User";
+  id: number;
+  nickname: string;
+}
+
+export interface postDetailQuery_postDetail_post_comments {
+  __typename: "Comment";
+  id: number;
+  content: string;
+  createdAt: any;
+  user: postDetailQuery_postDetail_post_comments_user;
+}
+
 export interface postDetailQuery_postDetail_post_artist {
   __typename: "Artist";
   id: number;
@@ -27,6 +41,7 @@ export interface postDetailQuery_postDetail_post {
   year: number | null;
   createdAt: any;
   isLike: boolean;
+  comments: postDetailQuery_postDetail_post_comments[];
   id: number;
   title: string;
   imgUrl: string;

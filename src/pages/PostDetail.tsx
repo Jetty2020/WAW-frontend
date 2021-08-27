@@ -1,24 +1,17 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../components/PageTitle';
-import { BsHeartFill, BsHeart } from 'react-icons/bs';
 import {
   postDetailQuery,
   postDetailQueryVariables,
 } from '../__generated__/postDetailQuery';
-import {
-  toggleLikeMutation,
-  toggleLikeMutationVariables,
-} from '../__generated__/toggleLikeMutation';
-import { client } from '../apollo';
 import { POST_FRAGMENT } from '../fragments';
+import LikeButton from '../components/postDetail/LikeButton';
+import Comment from '../components/postDetail/Comment';
 
-interface IParams {
-  postId: string;
-}
-const POST_DETAIL_QUERY = gql`
+export const POST_DETAIL_QUERY = gql`
   query postDetailQuery($postInput: PostDetailInput!) {
     postDetail(input: $postInput) {
       ok
@@ -28,6 +21,15 @@ const POST_DETAIL_QUERY = gql`
         year
         createdAt
         isLike
+        comments {
+          id
+          content
+          createdAt
+          user {
+            id
+            nickname
+          }
+        }
         ...PostParts
       }
     }
@@ -35,19 +37,12 @@ const POST_DETAIL_QUERY = gql`
   ${POST_FRAGMENT}
 `;
 
-const TOGGLE_LIKE_MUTATION = gql`
-  mutation toggleLikeMutation($toggleLikeInput: ToggleLikeInput!) {
-    toggleLike(input: $toggleLikeInput) {
-      ok
-      error
-    }
-  }
-`;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
+
 const PostCon = styled.div`
   width: 768px;
   margin-top: 2rem;
@@ -125,7 +120,7 @@ const PostImg = styled.img`
 const PostDesc = styled.div`
   display: flex;
   width: 85%;
-  margin: 5rem auto;
+  margin: 5rem auto 0;
   font-size: 1.125rem;
   font-weight: 400;
   line-height: 1.75rem;
@@ -134,44 +129,8 @@ const PostDesc = styled.div`
   }
 `;
 
-const LikeBtnCon = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 0.5rem;
-  padding-bottom: 1rem;
-  position: fixed;
-  top: 35%;
-  left: 10%;
-  width: 4rem;
-  border-radius: 2rem;
-  background-color: #eff1f2;
-`;
-
-const LikeBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 3rem;
-  height: 3rem;
-  border: 1px solid gray;
-  border-radius: 1.5rem;
-  background-color: ${(props) => props.theme.color.white};
-  cursor: pointer;
-  &:hover {
-    border-color: ${(props) => props.theme.color.red};
-    color: ${(props) => props.theme.color.red};
-  }
-`;
-
-const LikeNum = styled.div`
-  margin-top: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-`;
-
 const PostDetail: React.FC = () => {
-  const { postId } = useParams<IParams>();
+  const { postId } = useParams<{ postId: string }>();
   const { data, loading } = useQuery<postDetailQuery, postDetailQueryVariables>(
     POST_DETAIL_QUERY,
     {
@@ -182,53 +141,14 @@ const PostDetail: React.FC = () => {
       },
     }
   );
-  const onCompleted = (toggleLikeData: toggleLikeMutation) => {
-    const {
-      toggleLike: { ok },
-    } = toggleLikeData;
-    if (ok) {
-      const postIdCashe = `Post:${postId}`;
-      client.cache.modify({
-        id: postIdCashe,
-        fields: {
-          isLike(prev) {
-            return !prev;
-          },
-          likesNum(prev) {
-            if (data?.postDetail.post?.isLike) {
-              return prev - 1;
-            }
-            return prev + 1;
-          },
-        },
-      });
-    }
-  };
-  const [toggleLikeMutation] = useMutation<
-    toggleLikeMutation,
-    toggleLikeMutationVariables
-  >(TOGGLE_LIKE_MUTATION, {
-    variables: {
-      toggleLikeInput: { postId: +postId },
-    },
-    onCompleted,
-  });
-  // console.log(loading, data);
+
+  console.log(loading, data);
   // console.log(postId);
   return (
     <Container>
-      <LikeBtnCon>
-        <LikeBtn onClick={() => toggleLikeMutation()}>
-          {data?.postDetail.post?.isLike ? (
-            <BsHeartFill size="1.5rem" />
-          ) : (
-            <BsHeart size="1.5rem" />
-          )}
-        </LikeBtn>
-        <LikeNum>{data?.postDetail.post?.likesNum}</LikeNum>
-      </LikeBtnCon>
+      {data?.postDetail.post && <LikeButton data={data} postId={+postId} />}
       <PageTitle title={data?.postDetail.post?.title ?? 'Post'} />
-      {!loading ? (
+      {!loading && data?.postDetail.post ? (
         <PostCon>
           <Title>{data?.postDetail.post?.title}</Title>
           <PostInfoCon>
@@ -267,6 +187,7 @@ const PostDetail: React.FC = () => {
             <PostImg src={data?.postDetail.post?.imgUrl} />
           </ImgCon>
           <PostDesc>{data?.postDetail.post?.desc}</PostDesc>
+          <Comment data={data} postId={+postId} />
         </PostCon>
       ) : null}
     </Container>

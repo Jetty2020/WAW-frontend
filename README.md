@@ -22,7 +22,7 @@
 |                |     Post detail      |    Get Post detail    |  Done!   |
 |                |          "           |      Toggle Like      |  Done!   |
 |                |          "           |      Get Comment      |   Soon   |
-|                |          "           |    Create Comment     |   Soon   |
+|                |          "           |    Create Comment     |  Done!   |
 |                |          "           |    Delete Comment     |   Soon   |
 |                |      Edit Post       |                       |   Soon   |
 |                |     delete Post      |                       |   Soon   |

@@ -59,7 +59,7 @@ const Home = () => {
       {posts.length !== 0 ? (
         <ListContainer>
           {posts.map((post) => (
-            <PostList post={post} />
+            <PostList post={post} key={post.id} />
           ))}
           {!loading && data && more ? <div ref={ref} /> : null}
         </ListContainer>

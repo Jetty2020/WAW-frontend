@@ -95,7 +95,7 @@ type Props = {
 };
 const PostList: React.FC<Props> = ({ post }) => {
   return (
-    <List key={post.id}>
+    <List>
       <PostImgCon>
         <Link to={`/post/${[post.id]}`}>
           <PostImg alt="post" src={post.imgUrl} />

@@ -12,6 +12,10 @@ interface IButtonProps extends IButtonStyleProps {
 
 const StyledButton = styled.button<IButtonStyleProps>`
   padding: 0.5rem 1rem;
+  font-weight: 500;
+  border: none;
+  color: ${(props) => props.theme.color.white};
+  border-radius: 0.375rem;
   ${(props) =>
     props.canClick
       ? css`
@@ -25,10 +29,6 @@ const StyledButton = styled.button<IButtonStyleProps>`
           pointer-events: none;
         `}
   font-size: 0.875rem;
-  font-weight: 500;
-  border: none;
-  color: ${(props) => props.theme.color.white};
-  border-radius: 0.375rem;
 `;
 
 const AuthButton: React.FC<IButtonProps> = ({
