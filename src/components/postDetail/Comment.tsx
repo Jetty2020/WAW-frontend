@@ -2,6 +2,7 @@ import { gql, useApolloClient, useMutation } from '@apollo/client';
 import React, { useCallback, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import styled, { css } from 'styled-components';
+import useUser from '../../hooks/useUser';
 import { POST_DETAIL_QUERY } from '../../pages/PostDetail';
 import {
   createCommentMutation,
@@ -80,6 +81,7 @@ type Props = {
 };
 const Comment: React.FC<Props> = ({ data, postId }) => {
   const client = useApolloClient();
+  const {data: userData} = useUser();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const handleResizeHeight = useCallback(() => {
     if (textareaRef === null || textareaRef.current === null) {
@@ -120,6 +122,7 @@ const Comment: React.FC<Props> = ({ data, postId }) => {
     } = createCommentData;
     const { content } = getValues();
     if (ok) {
+      console.log(userData);
       const queryResult = client.readQuery({
         query: POST_DETAIL_QUERY,
         variables: {
@@ -142,8 +145,8 @@ const Comment: React.FC<Props> = ({ data, postId }) => {
                   createdAt: new Date().toISOString(),
                   user: {
                     __typename: 'User',
-                    id: 1,
-                    nickname: 'asdf',
+                    id: userData?.me.id,
+                    nickname: userData?.me.nickname,
                   },
                   __typename: 'Comment',
                 },

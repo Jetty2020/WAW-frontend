@@ -2,10 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Logo from './atoms/Logo';
-import { useHistory } from 'react-router-dom';
-import { authTokenVar, client, isLoggedInVar } from '../apollo';
+import { isLoggedInVar, logUserOut } from '../apollo';
 import { FaSignOutAlt } from 'react-icons/fa';
-import { LOCALSTORAGE_TOKEN } from '../constants';
+import { useReactiveVar } from '@apollo/client';
 
 const Container = styled.div`
   position: fixed;
@@ -61,22 +60,14 @@ const Signout = styled(FaSignOutAlt)`
 `;
 
 const Header: React.FC = () => {
-  const history = useHistory();
-  const logout = () => {
-    localStorage.removeItem(LOCALSTORAGE_TOKEN);
-    isLoggedInVar(false);
-    authTokenVar('');
-    client.cache.reset();
-    history.push('/login');
-  };
   return (
     <Container>
       <Link to="/">
         <Logo lWidth="6rem" lHeight="3rem" src="/waw.png" />
       </Link>
-      {isLoggedInVar() ? (
+      {useReactiveVar(isLoggedInVar) ? (
         <RightNav>
-          <Signout size="1.4rem" onClick={() => logout()} />
+          <Signout size="1.4rem" onClick={() => logUserOut()} />
         </RightNav>
       ) : (
         <RightNav>
