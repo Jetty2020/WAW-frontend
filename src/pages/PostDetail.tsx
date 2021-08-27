@@ -9,7 +9,7 @@ import {
 } from '../__generated__/postDetailQuery';
 import { POST_FRAGMENT } from '../fragments';
 import LikeButton from '../components/postDetail/LikeButton';
-import Comment from '../components/postDetail/Comment';
+import Comments from '../components/postDetail/Comments';
 
 export const POST_DETAIL_QUERY = gql`
   query postDetailQuery($postInput: PostDetailInput!) {
@@ -187,7 +187,7 @@ const PostDetail: React.FC = () => {
             <PostImg src={data?.postDetail.post?.imgUrl} />
           </ImgCon>
           <PostDesc>{data?.postDetail.post?.desc}</PostDesc>
-          <Comment data={data} postId={+postId} />
+          <Comments data={data} postId={+postId} />
         </PostCon>
       ) : null}
     </Container>

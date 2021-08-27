@@ -21,7 +21,7 @@
 |                |     Search Post      |                       |   Soon   |
 |                |     Post detail      |    Get Post detail    |  Done!   |
 |                |          "           |      Toggle Like      |  Done!   |
-|                |          "           |      Get Comment      |   Soon   |
+|                |          "           |      Get Comment      |  Done!   |
 |                |          "           |    Create Comment     |  Done!   |
 |                |          "           |    Delete Comment     |   Soon   |
 |                |      Edit Post       |                       |   Soon   |
