@@ -63,7 +63,7 @@ const Comments: React.FC<Props> = ({ postId }) => {
       <CommentListBox>
         {!loading && data?.getComments.totalResults !== 0 &&
           data?.getComments.comments?.map((comment) => (
-            <Comment data={comment} key={comment.id} />
+            <Comment data={comment} postId={postId} key={comment.id} />
           ))}
       </CommentListBox>
     </Container>

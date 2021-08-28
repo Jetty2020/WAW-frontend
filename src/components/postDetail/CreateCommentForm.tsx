@@ -121,6 +121,7 @@ const CreateCommentForm: React.FC<Props> = ({ postId, totalResults }) => {
     } = createCommentData;
     if (ok) {
       setValue('content', '');
+      handleResizeHeight();
     }
   };
   const [createCommentMutation] = useMutation<

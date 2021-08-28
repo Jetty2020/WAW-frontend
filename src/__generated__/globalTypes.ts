@@ -24,6 +24,10 @@ export interface CreateCommentInput {
   postId?: number | null;
 }
 
+export interface DeleteCommentInput {
+  commentId: number;
+}
+
 export interface GetCommentsInput {
   postId: number;
 }
