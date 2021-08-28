@@ -19,7 +19,7 @@ const Container = styled.div`
   align-items: center;
   background-color: #ffffff;
   border-bottom: 2px solid #e5e7eb;
-  z-index: 99999;
+  z-index: 999;
 `;
 
 const RightNav = styled.div`

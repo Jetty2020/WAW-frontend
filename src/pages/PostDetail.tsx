@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../components/PageTitle';
