@@ -14,7 +14,8 @@ const CommentList = styled.div`
   }
 `;
 
-const Nickname = styled.div`
+const Nickname = styled(Link)`
+  align-self: flex-start;
   font-size: 1rem;
   font-weight: 600;
   color: #343a40;
@@ -42,9 +43,9 @@ type Props = {
 const Comment: React.FC<Props> = ({ data }) => {
   return (
     <CommentList>
-      <Link to={`/user/${data.user.id}`}>
-        <Nickname>{data.user.nickname}</Nickname>
-      </Link>
+      <Nickname to={`/user/${data.user.id}`}>
+        {data.user.nickname}
+      </Nickname>
       <DateBox>{`${data.createdAt.substr(0, 4)}년 ${data.createdAt.substr(
         5,
         2

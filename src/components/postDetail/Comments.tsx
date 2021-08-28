@@ -30,6 +30,7 @@ export const GET_COMMENTS_QUERY = gql`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
   width: 85%;
 `;
 

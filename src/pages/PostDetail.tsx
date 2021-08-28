@@ -141,9 +141,6 @@ const PostDetail: React.FC = () => {
       },
     }
   );
-
-  console.log(loading, data);
-  // console.log(postId);
   return (
     <Container>
       {data?.postDetail.post && <LikeButton data={data} postId={+postId} />}
