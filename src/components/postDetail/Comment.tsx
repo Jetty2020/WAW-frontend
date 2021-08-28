@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { postDetailQuery_postDetail_post_comments } from '../../__generated__/postDetailQuery';
+import { getCommentsQuery_getComments_comments } from '../../__generated__/getCommentsQuery';
 
 const CommentList = styled.div`
   display: flex;
@@ -33,7 +33,7 @@ const Content = styled.div`
   margin-bottom: 1.5rem;
 `;
 type Props = {
-  data: postDetailQuery_postDetail_post_comments;
+  data: getCommentsQuery_getComments_comments;
 };
 
 const Comment: React.FC<Props> = ({ data }) => {

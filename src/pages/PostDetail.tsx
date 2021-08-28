@@ -21,15 +21,6 @@ export const POST_DETAIL_QUERY = gql`
         year
         createdAt
         isLike
-        comments {
-          id
-          content
-          createdAt
-          user {
-            id
-            nickname
-          }
-        }
         ...PostParts
       }
     }
@@ -187,7 +178,7 @@ const PostDetail: React.FC = () => {
             <PostImg src={data?.postDetail.post?.imgUrl} />
           </ImgCon>
           <PostDesc>{data?.postDetail.post?.desc}</PostDesc>
-          <Comments data={data} postId={+postId} />
+          <Comments postId={+postId} />
         </PostCon>
       ) : null}
     </Container>

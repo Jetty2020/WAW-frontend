@@ -24,6 +24,10 @@ export interface CreateCommentInput {
   postId?: number | null;
 }
 
+export interface GetCommentsInput {
+  postId: number;
+}
+
 export interface LoginInput {
   email: string;
   password: string;

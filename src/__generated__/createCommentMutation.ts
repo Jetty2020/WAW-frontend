@@ -13,7 +13,6 @@ export interface createCommentMutation_createComment {
   __typename: "CreateCommentOutput";
   ok: boolean;
   error: string | null;
-  id: number;
 }
 
 export interface createCommentMutation {
