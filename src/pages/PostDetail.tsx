@@ -57,6 +57,9 @@ const WriterBox = styled.div`
   font-size: 1rem;
   font-weight: 500;
   margin-right: 0.5rem;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 const DotBox = styled.div`
   font-weight: 500;
@@ -77,9 +80,15 @@ const DateBox = styled.div`
 const MadeCon = styled.div`
   display: flex;
 `;
-const ArtistName = styled.div`
+interface IArtistProps {
+  underline?: boolean;
+}
+const ArtistName = styled.div<IArtistProps>`
   font-size: 1rem;
   font-weight: 500;
+  &:hover {
+    text-decoration: ${(props) => (props.underline ? 'underline' : 'none')};
+  }
 `;
 const MadeYear = styled.div`
   font-size: 1rem;
@@ -162,7 +171,9 @@ const PostDetail: React.FC = () => {
             <MadeCon>
               {data?.postDetail.post?.artist?.name ? (
                 <Link to={`/made-by/${data?.postDetail.post?.artist?.id}`}>
-                  <ArtistName>{data?.postDetail.post?.artist?.name}</ArtistName>
+                  <ArtistName underline>
+                    {data?.postDetail.post?.artist?.name}
+                  </ArtistName>
                 </Link>
               ) : (
                 <ArtistName>작자 미상</ArtistName>

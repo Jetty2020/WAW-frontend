@@ -18,6 +18,9 @@ const Nickname = styled.div`
   font-size: 1rem;
   font-weight: 600;
   color: #343a40;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const DateBox = styled.div`
