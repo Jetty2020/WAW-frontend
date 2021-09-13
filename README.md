@@ -23,7 +23,7 @@
 |                |          "           |      Toggle Like      |  Done!   |
 |                |          "           |      Get Comment      |  Done!   |
 |                |          "           |    Create Comment     |  Done!   |
-|                |          "           |    Delete Comment     |   Soon   |
+|                |          "           |    Delete Comment     |  Done!   |
 |                |      Edit Post       |                       |   Soon   |
 |                |     delete Post      |                       |   Soon   |
 |                | Posts sort by artist |                       |   Soon   |

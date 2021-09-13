@@ -37,6 +37,7 @@ const Container = styled.div`
 const PostCon = styled.div`
   width: 768px;
   margin-top: 2rem;
+  margin-bottom: 3rem;
   @media screen and (max-width: 768px) {
     width: 90%;
   }

@@ -27,6 +27,26 @@ const RightNav = styled.div`
   align-items: center;
 `;
 
+const CreatePostBtn = styled.div`
+  display: flex;
+  height: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 1rem;
+  border: 1px solid #343a40;
+  color: #343a40;
+  cursor: pointer;
+  margin-right: 2rem;
+  align-items: center;
+  transition: all 0.125s ease-in 0s;
+  &:hover {
+    color: ${(props) => props.theme.color.white};
+    background-color: #343a40;
+  }
+`;
+
 const LoginButton = styled.div`
   color: #6b7280;
   font-size: 0.875rem;
@@ -67,6 +87,9 @@ const Header: React.FC = () => {
       </Link>
       {useReactiveVar(isLoggedInVar) ? (
         <RightNav>
+          <Link to="/create-post">
+            <CreatePostBtn>새 글 작성</CreatePostBtn>
+          </Link>
           <Signout size="1.4rem" onClick={() => logUserOut()} />
         </RightNav>
       ) : (
