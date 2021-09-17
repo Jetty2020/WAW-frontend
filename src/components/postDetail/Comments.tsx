@@ -28,10 +28,10 @@ export const GET_COMMENTS_QUERY = gql`
 `;
 
 const Container = styled.div`
+  width: 85%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  width: 85%;
 `;
 
 const CommentListBox = styled.div`

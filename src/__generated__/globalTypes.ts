@@ -24,6 +24,14 @@ export interface CreateCommentInput {
   postId?: number | null;
 }
 
+export interface CreatePostInput {
+  title?: string | null;
+  imgUrl?: string | null;
+  year?: number | null;
+  desc?: string | null;
+  artistName?: string | null;
+}
+
 export interface DeleteCommentInput {
   commentId: number;
 }

@@ -12,6 +12,7 @@ import { theme, GlobalStyles } from './styles/golobalStyles';
 import Layout from './components/Layout';
 import Join from './pages/Join';
 import PostDetail from './pages/PostDetail';
+import CreatePost from './pages/CreatePost';
 
 function App() {
   return (
@@ -29,6 +30,11 @@ function App() {
               <Route path={routes.postDetail} exact>
                 <Layout>
                   <PostDetail />
+                </Layout>
+              </Route>
+              <Route path={routes.createPost} exact>
+                <Layout>
+                  <CreatePost />
                 </Layout>
               </Route>
               <Route path={routes.login} exact>

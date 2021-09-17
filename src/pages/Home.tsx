@@ -13,7 +13,7 @@ import PostList from '../components/home/PostList';
 import NoMorePost from '../components/home/NoMorePost';
 import { POST_FRAGMENT } from '../fragments';
 
-const POSTS_QUERY = gql`
+export const POSTS_QUERY = gql`
   query postsQuery($postsInput: PostsInput!) {
     posts(input: $postsInput) {
       ok

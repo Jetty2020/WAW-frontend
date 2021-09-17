@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 interface IButtonStyleProps {
   canClick?: boolean;
+  uploading?: boolean;
 }
 
 interface IButtonProps extends IButtonStyleProps {
@@ -11,13 +12,14 @@ interface IButtonProps extends IButtonStyleProps {
 }
 
 const StyledButton = styled.button<IButtonStyleProps>`
+  width: 100%;
   padding: 0.5rem 1rem;
   font-weight: 500;
   border: none;
   color: ${(props) => props.theme.color.white};
   border-radius: 0.375rem;
   ${(props) =>
-    props.canClick
+    props.canClick && !props.uploading
       ? css`
           background-color: ${(props) => props.theme.color.blue};
           &:hover {
@@ -31,14 +33,21 @@ const StyledButton = styled.button<IButtonStyleProps>`
   font-size: 0.875rem;
 `;
 
-const AuthButton: React.FC<IButtonProps> = ({
+const Button: React.FC<IButtonProps> = ({
   canClick,
   loading,
   actionText,
-}) => (
-  <StyledButton canClick={canClick}>
-    {loading ? 'Loading...' : actionText}
-  </StyledButton>
-);
+  uploading,
+}) => {
+  let text = '';
+  if (loading) text = 'Loading...';
+  else if (uploading) text = 'Uploading...';
+  else text = actionText;
+  return (
+    <StyledButton canClick={canClick} uploading={uploading}>
+      {text}
+    </StyledButton>
+  );
+};
 
-export default AuthButton;
+export default Button;

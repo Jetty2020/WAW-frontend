@@ -9,11 +9,11 @@ import {
 } from '../__generated__/loginMutation';
 import { LOCALSTORAGE_TOKEN } from '../constants';
 import { authTokenVar, isLoggedInVar } from '../apollo';
-import AuthButton from '../components/auth/AuthButton';
+import Button from '../components/atoms/Button';
 import ErrorForm from '../components/auth/ErrorForm';
-import AuthInput from '../components/auth/AuthInput';
+import Input from '../components/atoms/Input';
 import InputLabel from '../components/auth/InputLabel';
-import AuthHeader from '../components/auth/AuthHeader';
+import PageHeader from '../components/atoms/PageHeader';
 import FormContainer from '../components/auth/FormContainer';
 import Form from '../components/auth/Form';
 import Logo from '../components/atoms/Logo';
@@ -74,7 +74,7 @@ const Login = () => {
   return (
     <AuthContainer>
       <PageTitle title="Login" />
-      <AuthHeader>Login to WAW</AuthHeader>
+      <PageHeader>Login to WAW</PageHeader>
       <FormContainer>
         <Logo margin=" 0 0 1rem" src="/mona.jpeg" />
         {loginMutationResult?.login.error && (
@@ -95,7 +95,7 @@ const Login = () => {
         )}
         <Form onSubmit={handleSubmit(onSubmit)}>
           <InputLabel htmlFor="email">Email</InputLabel>
-          <AuthInput
+          <Input
             {...register('email', {
               required: '메일이 비어있습니다.',
               pattern:
@@ -107,7 +107,7 @@ const Login = () => {
             className="input"
           />
           <InputLabel htmlFor="password">Password</InputLabel>
-          <AuthInput
+          <Input
             {...register('password', {
               required: '비밀번호가 비어있습니다.',
               maxLength: 15,
@@ -118,7 +118,7 @@ const Login = () => {
             type="password"
             className="input"
           />
-          <AuthButton canClick={isValid} loading={loading} actionText={'Log in'} />
+          <Button canClick={isValid} loading={loading} actionText={'Log in'} />
         </Form>
       </FormContainer>
     </AuthContainer>

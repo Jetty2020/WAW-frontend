@@ -4,11 +4,11 @@ import { useForm } from 'react-hook-form';
 import PageTitle from '../components/PageTitle';
 import { CreateAccountInput, UserRole } from '../__generated__/globalTypes';
 import { isLoggedInVar } from '../apollo';
-import AuthButton from '../components/auth/AuthButton';
+import Button from '../components/atoms/Button';
 import ErrorForm from '../components/auth/ErrorForm';
-import AuthInput from '../components/auth/AuthInput';
+import Input from '../components/atoms/Input';
 import InputLabel from '../components/auth/InputLabel';
-import AuthHeader from '../components/auth/AuthHeader';
+import PageHeader from '../components/atoms/PageHeader';
 import FormContainer from '../components/auth/FormContainer';
 import Form from '../components/auth/Form';
 import Logo from '../components/atoms/Logo';
@@ -74,7 +74,7 @@ const Join = () => {
   return (
     <AuthContainer>
       <PageTitle title="Join" />
-      <AuthHeader>Join to WAW</AuthHeader>
+      <PageHeader>Join to WAW</PageHeader>
       <FormContainer>
         <Logo margin=" 0 0 1rem" src="/mona.jpeg" />
         {createAccountMutationResult?.createAccount.error && (
@@ -104,7 +104,7 @@ const Join = () => {
         )}
         <Form onSubmit={handleSubmit(onSubmit)}>
           <InputLabel htmlFor="email">Email</InputLabel>
-          <AuthInput
+          <Input
             {...register('email', {
               required: '메일이 비어있습니다.',
               pattern:
@@ -116,7 +116,7 @@ const Join = () => {
             className="input"
           />
           <InputLabel htmlFor="nickname">Username</InputLabel>
-          <AuthInput
+          <Input
             {...register('nickname', {
               required: 'Username이 비어있습니다.',
               maxLength: 13,
@@ -128,7 +128,7 @@ const Join = () => {
             className="input"
           />
           <InputLabel htmlFor="password">Password</InputLabel>
-          <AuthInput
+          <Input
             {...register('password', {
               required: '비밀번호가 비어있습니다.',
               maxLength: 15,
@@ -139,7 +139,7 @@ const Join = () => {
             type="password"
             className="input"
           />
-          <AuthButton
+          <Button
             canClick={isValid}
             loading={loading}
             actionText={'Create Account'}

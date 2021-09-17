@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const Form = styled.form`
-  display: grid;
-  grid-template-columns: 1;
+  display: flex;
+  flex-direction: column;
   width: 100%;
 `;
 

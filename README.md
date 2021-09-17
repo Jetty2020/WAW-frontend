@@ -17,8 +17,8 @@
 |                |     Update User      |                       |   Soon   |
 |                |                      |        Logout         |  Done!   |
 | **Post**       |    Landing(Home)     |                       |  Done!   |
-|                |     Create Post      |                       |   Soon   |
-|                |     Search Post      |                       |   Soon   |
+|                |     Create Post      |                       |  Done!   |
+|                |  Search Post(title)  |                       |   Soon   |
 |                |     Post detail      |    Get Post detail    |  Done!   |
 |                |          "           |      Toggle Like      |  Done!   |
 |                |          "           |      Get Comment      |  Done!   |
