@@ -1,6 +1,6 @@
-import { gql, useQuery } from '@apollo/client';
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import React, { useState } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../components/PageTitle';
 import {
@@ -10,6 +10,14 @@ import {
 import { POST_FRAGMENT } from '../fragments';
 import LikeButton from '../components/postDetail/LikeButton';
 import Comments from '../components/postDetail/Comments';
+import {
+  deletePostMutation,
+  deletePostMutationVariables,
+} from '../__generated__/deletePostMutation';
+import { POSTS_QUERY } from './Home';
+import { client } from '../apollo';
+import DeleteModal from '../components/postDetail/DeleteModal';
+import useUser from '../hooks/useUser';
 
 export const POST_DETAIL_QUERY = gql`
   query postDetailQuery($postInput: PostDetailInput!) {
@@ -26,6 +34,15 @@ export const POST_DETAIL_QUERY = gql`
     }
   }
   ${POST_FRAGMENT}
+`;
+
+const DELETE_POST_MUTATION = gql`
+  mutation deletePostMutation($deletePostInput: DeletePostInput!) {
+    deletePost(input: $deletePostInput) {
+      ok
+      error
+    }
+  }
 `;
 
 const Container = styled.div`
@@ -110,6 +127,19 @@ const ImgCon = styled.div`
     width: 95%;
   }
 `;
+const EditBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+`;
+const EditBtn = styled.button`
+  margin-left: 1rem;
+  color: gray;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  background-color: ${(props) => props.theme.color.lightgray};
+`;
 const PostImg = styled.img`
   max-width: 500px;
   max-height: 500px;
@@ -131,7 +161,9 @@ const PostDesc = styled.div`
 `;
 
 const PostDetail: React.FC = () => {
+  const history = useHistory();
   const { postId } = useParams<{ postId: string }>();
+  const [modalShow, setModalShow] = useState<boolean>(false);
   const { data, loading } = useQuery<postDetailQuery, postDetailQueryVariables>(
     POST_DETAIL_QUERY,
     {
@@ -142,9 +174,64 @@ const PostDetail: React.FC = () => {
       },
     }
   );
+  const onCompleted = (data: deletePostMutation) => {
+    const {
+      deletePost: { ok },
+    } = data;
+    if (ok) {
+      const queryId = `Root_Query`;
+      client.cache.modify({
+        id: queryId,
+        fields: {
+          posts(prev) {
+            console.log(prev);
+            return prev;
+          },
+        },
+      });
+      history.push(`/`);
+    }
+  };
+  const [deletePostMutation] = useMutation<
+    deletePostMutation,
+    deletePostMutationVariables
+  >(DELETE_POST_MUTATION, {
+    refetchQueries: [
+      {
+        query: POSTS_QUERY,
+        variables: {
+          postsInput: {
+            page: 1,
+          },
+        },
+      },
+    ],
+    awaitRefetchQueries: true,
+    onCompleted,
+  });
+  const updatePost = () => {
+    console.log('update');
+  };
+  const deletePost = () => {
+    deletePostMutation({
+      variables: {
+        deletePostInput: {
+          postId: +postId,
+        },
+      },
+    });
+  };
+  const { data: userData } = useUser();
   return (
     <Container>
       {data?.postDetail.post && <LikeButton data={data} postId={+postId} />}
+      {modalShow && (
+        <DeleteModal
+          setModalShow={setModalShow}
+          deleteFC={deletePost}
+          modalText="게시물"
+        />
+      )}
       <PageTitle title={data?.postDetail.post?.title ?? 'Post'} />
       {!loading && data?.postDetail.post ? (
         <PostCon>
@@ -183,6 +270,12 @@ const PostDetail: React.FC = () => {
               </MadeYear>
             </MadeCon>
           </PostInfoCon>
+          {userData?.me.id === data?.postDetail.post?.writer?.id && (
+            <EditBox>
+              <EditBtn onClick={() => updatePost()}>수정</EditBtn>
+              <EditBtn onClick={() => setModalShow(true)}>삭제</EditBtn>
+            </EditBox>
+          )}
           <ImgCon>
             <PostImg src={data?.postDetail.post?.imgUrl} />
           </ImgCon>

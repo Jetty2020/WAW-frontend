@@ -1,8 +1,24 @@
+import { gql, useMutation } from '@apollo/client';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import useUser from '../../hooks/useUser';
+import {
+  deleteCommentMutation,
+  deleteCommentMutationVariables,
+} from '../../__generated__/deleteCommentMutation';
 import { getCommentsQuery_getComments_comments } from '../../__generated__/getCommentsQuery';
+import { GET_COMMENTS_QUERY } from './Comments';
 import DeleteModal from './DeleteModal';
+
+const DELETE_COMMENT_MUTATION = gql`
+  mutation deleteCommentMutation($deleteCommentInput: DeleteCommentInput!) {
+    deleteComment(input: $deleteCommentInput) {
+      ok
+      error
+    }
+  }
+`;
 
 const CommentList = styled.div`
   display: flex;
@@ -57,13 +73,41 @@ type Props = {
 };
 
 const Comment: React.FC<Props> = ({ data, postId }) => {
+  const { data: userData } = useUser();
   const [modalShow, setModalShow] = useState<boolean>(false);
-  const handleModal = () => {
-    setModalShow(true);
+  const [deleteCommentMutation] = useMutation<
+    deleteCommentMutation,
+    deleteCommentMutationVariables
+  >(DELETE_COMMENT_MUTATION, {
+    refetchQueries: [
+      {
+        query: GET_COMMENTS_QUERY,
+        variables: {
+          getCommentsInput: {
+            postId,
+          },
+        },
+      },
+    ],
+  });
+  const deleteComment = () => {
+    deleteCommentMutation({
+      variables: {
+        deleteCommentInput: {
+          commentId: data.id,
+        },
+      },
+    });
   };
   return (
     <CommentList>
-      {modalShow && <DeleteModal setModalShow={setModalShow} postId={postId} commentId={data.id} />}
+      {modalShow && (
+        <DeleteModal
+          setModalShow={setModalShow}
+          deleteFC={deleteComment}
+          modalText="댓글"
+        />
+      )}
       <InfoBox>
         <div>
           <Nickname to={`/user/${data.user.id}`}>{data.user.nickname}</Nickname>
@@ -72,7 +116,9 @@ const Comment: React.FC<Props> = ({ data, postId }) => {
             2
           )}월 ${data.createdAt.substr(8, 2)}일`}</DateBox>
         </div>
-        <DeleteCon onClick={() => handleModal()}>삭제</DeleteCon>
+        {data.user.id === userData?.me.id && (
+          <DeleteCon onClick={() => setModalShow(true)}>삭제</DeleteCon>
+        )}
       </InfoBox>
       <Content>{data.content}</Content>
     </CommentList>

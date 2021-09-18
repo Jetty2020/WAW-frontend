@@ -1,21 +1,6 @@
-import { gql, useMutation } from '@apollo/client';
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-import {
-  deleteCommentMutation,
-  deleteCommentMutationVariables,
-} from '../../__generated__/deleteCommentMutation';
-import { GET_COMMENTS_QUERY } from './Comments';
-
-const DELETE_COMMENT_MUTATION = gql`
-  mutation deleteCommentMutation($deleteCommentInput: DeleteCommentInput!) {
-    deleteComment(input: $deleteCommentInput) {
-      ok
-      error
-    }
-  }
-`;
 
 const ModalBg = styled.div`
   display: flex;
@@ -75,10 +60,10 @@ const ModalBtn = styled.button<IModalBtnProps>`
 
 type Props = {
   setModalShow: (value: boolean) => void;
-  postId: number;
-  commentId: number;
+  deleteFC:() => void;
+  modalText?: string;
 };
-const DeleteModal: React.FC<Props> = ({ setModalShow, postId, commentId }) => {
+const DeleteModal: React.FC<Props> = ({ setModalShow, deleteFC,modalText }) => {
   useEffect(() => {
     document.body.style.cssText = `
       position: fixed; 
@@ -91,40 +76,17 @@ const DeleteModal: React.FC<Props> = ({ setModalShow, postId, commentId }) => {
       window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
     };
   }, []);
-  const [deleteCommentMutation] = useMutation<
-    deleteCommentMutation,
-    deleteCommentMutationVariables
-  >(DELETE_COMMENT_MUTATION, {
-    refetchQueries: [
-      {
-        query: GET_COMMENTS_QUERY,
-        variables: {
-          getCommentsInput: {
-            postId,
-          },
-        },
-      },
-    ],
-  });
-  const deleteComment = () => {
-    deleteCommentMutation({
-      variables: {
-        deleteCommentInput: {
-          commentId,
-        },
-      },
-    });
-  };
+  
   return createPortal(
     <ModalBg>
       <ModalBox>
-        <ModalTitle>댓글 삭제</ModalTitle>
-        <ModalContent>댓글을 정말로 삭제하시겠습니까?</ModalContent>
+        <ModalTitle>{modalText} 삭제</ModalTitle>
+        <ModalContent>{modalText}을 정말로 삭제하시겠습니까?</ModalContent>
         <ModalBtnBox>
           <ModalBtn cancel onClick={() => setModalShow(false)}>
             취소
           </ModalBtn>
-          <ModalBtn onClick={() => deleteComment()}>확인</ModalBtn>
+          <ModalBtn onClick={() => deleteFC()}>확인</ModalBtn>
         </ModalBtnBox>
       </ModalBox>
     </ModalBg>,
