@@ -13,6 +13,7 @@ import Layout from './components/Layout';
 import Join from './pages/Join';
 import PostDetail from './pages/PostDetail';
 import CreatePost from './pages/CreatePost';
+import EditPost from './pages/EditPost';
 
 function App() {
   return (
@@ -35,6 +36,11 @@ function App() {
               <Route path={routes.createPost} exact>
                 <Layout>
                   <CreatePost />
+                </Layout>
+              </Route>
+              <Route path={routes.editPost} exact>
+                <Layout>
+                  <EditPost />
                 </Layout>
               </Route>
               <Route path={routes.login} exact>

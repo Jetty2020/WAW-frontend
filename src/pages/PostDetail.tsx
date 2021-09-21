@@ -210,7 +210,7 @@ const PostDetail: React.FC = () => {
     onCompleted,
   });
   const updatePost = () => {
-    console.log('update');
+    history.push(`/edit-post/${postId}`);
   };
   const deletePost = () => {
     deletePostMutation({

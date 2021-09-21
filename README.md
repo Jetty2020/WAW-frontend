@@ -24,8 +24,8 @@
 |                |          "           |      Get Comment      |  Done!   |
 |                |          "           |    Create Comment     |  Done!   |
 |                |          "           |    Delete Comment     |  Done!   |
-|                |      Edit Post       |                       |   Soon   |
-|                |     delete Post      |                       |   Soon   |
+|                |      Edit Post       |                       |  Done!   |
+|                |     delete Post      |                       |  Done!   |
 |                | Posts sort by artist |                       |   Soon   |
 | **Other**      |                      |        Router         |  Done!   |
 |                |                      |     Apollo config     |  Done!   |

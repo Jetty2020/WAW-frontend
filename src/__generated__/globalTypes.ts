@@ -40,6 +40,15 @@ export interface DeletePostInput {
   postId: number;
 }
 
+export interface EditPostInput {
+  title?: string | null;
+  imgUrl?: string | null;
+  year?: number | null;
+  desc?: string | null;
+  artistName?: string | null;
+  postId: number;
+}
+
 export interface GetCommentsInput {
   postId: number;
 }
