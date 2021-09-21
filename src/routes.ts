@@ -5,5 +5,6 @@ const routes = {
   createPost: '/create-post',
   editPost: '/edit-post/:postId',
   postDetail: '/post/:postId',
+  search: '/search',
 };
 export default routes;

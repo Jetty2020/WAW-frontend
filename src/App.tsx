@@ -14,6 +14,7 @@ import Join from './pages/Join';
 import PostDetail from './pages/PostDetail';
 import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
+import Search from './pages/Search';
 
 function App() {
   return (
@@ -51,6 +52,11 @@ function App() {
               <Route path={routes.join} exact>
                 <Layout>
                   <Join />
+                </Layout>
+              </Route>
+              <Route path={routes.search}>
+                <Layout>
+                  <Search />
                 </Layout>
               </Route>
               <Route>

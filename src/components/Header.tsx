@@ -5,6 +5,7 @@ import Logo from './atoms/Logo';
 import { isLoggedInVar, logUserOut } from '../apollo';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useReactiveVar } from '@apollo/client';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 const Container = styled.div`
   position: fixed;
@@ -20,11 +21,25 @@ const Container = styled.div`
   background-color: #ffffff;
   border-bottom: 2px solid #e5e7eb;
   z-index: 999;
+  @media screen and (max-width: 425px) {
+    padding: 0 1rem;
+  }
 `;
 
 const RightNav = styled.div`
   display: flex;
   align-items: center;
+`;
+const LogBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const SearchIcon = styled(AiOutlineSearch)`
+  color: #2c2c2c;
+  margin-right: 1rem;
+  &:hover {
+    color: #545454;
+  }
 `;
 
 const CreatePostBtn = styled.div`
@@ -38,7 +53,7 @@ const CreatePostBtn = styled.div`
   border: 1px solid #343a40;
   color: #343a40;
   cursor: pointer;
-  margin-right: 2rem;
+  margin-right: 1rem;
   align-items: center;
   transition: all 0.125s ease-in 0s;
   &:hover {
@@ -85,23 +100,28 @@ const Header: React.FC = () => {
       <Link to="/">
         <Logo lWidth="6rem" lHeight="3rem" src="/waw.png" />
       </Link>
-      {useReactiveVar(isLoggedInVar) ? (
-        <RightNav>
-          <Link to="/create-post">
-            <CreatePostBtn>새 글 작성</CreatePostBtn>
-          </Link>
-          <Signout size="1.4rem" onClick={() => logUserOut()} />
-        </RightNav>
-      ) : (
-        <RightNav>
-          <Link to="/login">
-            <LoginButton>Login</LoginButton>
-          </Link>
-          <Link to="/join">
-            <JoinButton>Join</JoinButton>
-          </Link>
-        </RightNav>
-      )}
+      <RightNav>
+        <Link to="/search">
+          <SearchIcon size="1.5rem" />
+        </Link>
+        {useReactiveVar(isLoggedInVar) ? (
+          <LogBox>
+            <Link to="/create-post">
+              <CreatePostBtn>새 글 작성</CreatePostBtn>
+            </Link>
+            <Signout size="1.4rem" onClick={() => logUserOut()} />
+          </LogBox>
+        ) : (
+          <LogBox>
+            <Link to="/login">
+              <LoginButton>Login</LoginButton>
+            </Link>
+            <Link to="/join">
+              <JoinButton>Join</JoinButton>
+            </Link>
+          </LogBox>
+        )}
+      </RightNav>
     </Container>
   );
 };
