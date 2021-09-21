@@ -1,5 +1,5 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../components/PageTitle';
@@ -222,6 +222,10 @@ const PostDetail: React.FC = () => {
     });
   };
   const { data: userData } = useUser();
+  useEffect(() => {
+    if (!loading && !data?.postDetail.post)
+      history.push(`/post/${postId}/NotFound`);
+  });
   return (
     <Container>
       {data?.postDetail.post && <LikeButton data={data} postId={+postId} />}
