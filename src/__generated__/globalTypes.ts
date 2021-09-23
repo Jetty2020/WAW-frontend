@@ -66,6 +66,11 @@ export interface PostsInput {
   page?: number | null;
 }
 
+export interface SearchPostInput {
+  page?: number | null;
+  query: string;
+}
+
 export interface ToggleLikeInput {
   postId: number;
 }
