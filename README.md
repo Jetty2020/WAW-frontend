@@ -26,7 +26,7 @@
 |                |          "           |    Delete Comment     |  Done!   |
 |                |      Edit Post       |                       |  Done!   |
 |                |     delete Post      |                       |  Done!   |
-|                | Posts sort by artist |                       |   Soon   |
+|                | Posts sort by artist |                       |  Done!   |
 | **Other**      |                      |        Router         |  Done!   |
 |                |                      |     Apollo config     |  Done!   |
 |                |                      |     Global styles     |  Done!   |

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Logo from './atoms/Logo';
-import { isLoggedInVar, logUserOut } from '../apollo';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { isLoggedInVar } from '../apollo';
 import { useReactiveVar } from '@apollo/client';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { AiFillCaretDown, AiOutlineSearch } from 'react-icons/ai';
+import DropDown from './DropDown';
 
 const Container = styled.div`
   position: fixed;
@@ -37,8 +37,9 @@ const LogBox = styled.div`
 const SearchIcon = styled(AiOutlineSearch)`
   color: #2c2c2c;
   margin-right: 1rem;
+  transition: all 0.2s ease-in 0s;
   &:hover {
-    color: #545454;
+    color: #7c7c7c;
   }
 `;
 
@@ -68,6 +69,7 @@ const LoginButton = styled.div`
   font-weight: 600;
   cursor: pointer;
   margin-right: 2rem;
+  transition: all 0.2s ease-in 0s;
   &:hover {
     color: #374251;
   }
@@ -81,22 +83,24 @@ const JoinButton = styled.button`
   border-radius: 0.375rem;
   border: none;
   cursor: pointer;
+  transition: all 0.2s ease-in 0s;
   &:hover {
     background-color: ${(props) => props.theme.color.lightblue};
   }
 `;
-
-const Signout = styled(FaSignOutAlt)`
+const DropDownIcon = styled(AiFillCaretDown)`
   cursor: pointer;
   color: #2c2c2c;
   &:hover {
-    color: #545454;
+    color: #7c7c7c;
   }
 `;
 
 const Header: React.FC = () => {
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   return (
     <Container>
+      {showMenu && <DropDown showMenu={showMenu} setShowMenu={setShowMenu} />}
       <Link to="/">
         <Logo lWidth="6rem" lHeight="3rem" src="/waw.png" />
       </Link>
@@ -109,7 +113,7 @@ const Header: React.FC = () => {
             <Link to="/create-post">
               <CreatePostBtn>새 글 작성</CreatePostBtn>
             </Link>
-            <Signout size="1.4rem" onClick={() => logUserOut()} />
+            <DropDownIcon size="1.4rem" onClick={() => setShowMenu(true)} />
           </LogBox>
         ) : (
           <LogBox>
