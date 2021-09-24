@@ -6,6 +6,10 @@ import { useInView } from 'react-intersection-observer';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../components/PageTitle';
+import {
+  getArtistsQuery,
+  getArtistsQueryVariables,
+} from '../__generated__/getArtistsQuery';
 import { SearchPostInput } from '../__generated__/globalTypes';
 import {
   searchPostQuery,
@@ -39,6 +43,19 @@ const SEARCH_POST_QUERY = gql`
   }
 `;
 
+const GET_ARTISTS_QUERY = gql`
+  query getArtistsQuery($getArtistsInput: ArtistInput!) {
+    getArtists(input: $getArtistsInput) {
+      ok
+      error
+      totalResults
+      artists {
+        id
+        name
+      }
+    }
+  }
+`;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -143,6 +160,21 @@ const NoMoreData = styled.div`
   margin-top: 2rem;
   margin-bottom: 5rem;
 `;
+const ArtistCon = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 1rem;
+  width: 100%;
+`;
+const ArtistBox = styled.div`
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  margin: 0.375rem 0.5rem;
+  border-radius: 2.5rem;
+  background-color: rgb(241, 243, 245);
+  color: rgb(12, 166, 120);
+`;
 
 const Search: React.FC = () => {
   const [page, setPage] = useState<number>(1);
@@ -164,24 +196,37 @@ const Search: React.FC = () => {
     history.push(`/search?q=${query}`);
   };
 
-  const { data, loading } = useQuery<searchPostQuery, searchPostQueryVariables>(
-    SEARCH_POST_QUERY,
-    {
-      variables: {
-        searchPostInput: {
-          query: searchQuery ? searchQuery : '',
-          page,
-        },
+  const { data: postsData, loading: postsLoading } = useQuery<
+    searchPostQuery,
+    searchPostQueryVariables
+  >(SEARCH_POST_QUERY, {
+    variables: {
+      searchPostInput: {
+        query: searchQuery ? searchQuery : '',
+        page,
       },
-    }
-  );
+    },
+  });
+  const { data: artistsData, loading: artistsLoading } = useQuery<
+    getArtistsQuery,
+    getArtistsQueryVariables
+  >(GET_ARTISTS_QUERY, {
+    variables: {
+      getArtistsInput: {
+        page,
+      },
+    },
+  });
   useEffect(() => {
-    data?.searchPost.posts?.forEach((post) => {
+    postsData?.searchPost.posts?.forEach((post) => {
       setPosts((cur) => [...cur, post]);
     });
-  }, [data]);
-  if (inView === true && !loading) setPage((cur) => cur + 1);
-  if (more && (posts.length % 6 !== 0 || data?.searchPost.posts?.length === 0))
+  }, [postsData]);
+  if (inView === true && !postsLoading) setPage((cur) => cur + 1);
+  if (
+    more &&
+    (posts.length % 6 !== 0 || postsData?.searchPost.posts?.length === 0)
+  )
     setMore(false);
   return (
     <Container>
@@ -202,11 +247,24 @@ const Search: React.FC = () => {
             />
           </InputBox>
         </form>
+        {(!posts.length || !word) && !artistsLoading && (
+          <ArtistCon>
+            <div>작가들 : </div>
+            {!artistsLoading &&
+              artistsData?.getArtists.artists?.map((artist) => (
+                <Link to={`/artist/${artist.id}`}>
+                  <ArtistBox>{artist.name}</ArtistBox>
+                </Link>
+              ))}
+          </ArtistCon>
+        )}
         {posts && word && (
           <div>
             <TotalSearch>
               총{' '}
-              <TotalSearchNum>{data?.searchPost.totalResults}개</TotalSearchNum>
+              <TotalSearchNum>
+                {postsData?.searchPost.totalResults}개
+              </TotalSearchNum>
               의 포스트를 찾았습니다.
             </TotalSearch>
             {posts?.map((post) => (
@@ -252,13 +310,13 @@ const Search: React.FC = () => {
                 </PostBox>
               </PostCon>
             ))}
-            {!loading && more && <div ref={ref} />}
+            {!postsLoading && more && <div ref={ref} />}
           </div>
         )}
-        {!more && (
+        {!more && !postsLoading && (
           <NoMoreData>
-            더 이상 게시물이 없습니다. ( {data?.searchPost.totalResults} /{' '}
-            {data?.searchPost.totalResults} )
+            더 이상 게시물이 없습니다. ( {postsData?.searchPost.totalResults} /{' '}
+            {postsData?.searchPost.totalResults} )
           </NoMoreData>
         )}
       </SearchCon>

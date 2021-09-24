@@ -12,6 +12,11 @@ export enum UserRole {
   Manager = "Manager",
 }
 
+export interface ArtistInput {
+  page?: number | null;
+  slug?: string | null;
+}
+
 export interface CreateAccountInput {
   email: string;
   nickname: string;

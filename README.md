@@ -18,7 +18,7 @@
 |                |                      |        Logout         |  Done!   |
 | **Post**       |    Landing(Home)     |                       |  Done!   |
 |                |     Create Post      |                       |  Done!   |
-|                |  Search Post(title)  |                       |   Soon   |
+|                |  Search Post(title)  |                       |  Done!   |
 |                |     Post detail      |    Get Post detail    |  Done!   |
 |                |          "           |      Toggle Like      |  Done!   |
 |                |          "           |      Get Comment      |  Done!   |
