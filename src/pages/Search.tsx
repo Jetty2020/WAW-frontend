@@ -6,10 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../components/PageTitle';
-import {
-  getArtistsQuery,
-  getArtistsQueryVariables,
-} from '../__generated__/getArtistsQuery';
+import useArtist from '../hooks/useArtist';
 import { SearchPostInput } from '../__generated__/globalTypes';
 import {
   searchPostQuery,
@@ -43,19 +40,6 @@ const SEARCH_POST_QUERY = gql`
   }
 `;
 
-const GET_ARTISTS_QUERY = gql`
-  query getArtistsQuery($getArtistsInput: ArtistInput!) {
-    getArtists(input: $getArtistsInput) {
-      ok
-      error
-      totalResults
-      artists {
-        id
-        name
-      }
-    }
-  }
-`;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -181,6 +165,7 @@ const Search: React.FC = () => {
   const [posts, setPosts] = useState<searchPostQuery_searchPost_posts[]>([]);
   const [more, setMore] = useState<boolean>(true);
   const history = useHistory();
+  const { artistsData, artistsLoading } = useArtist();
   const { ref, inView } = useInView({
     threshold: 0,
   });
@@ -203,16 +188,6 @@ const Search: React.FC = () => {
     variables: {
       searchPostInput: {
         query: searchQuery ? searchQuery : '',
-        page,
-      },
-    },
-  });
-  const { data: artistsData, loading: artistsLoading } = useQuery<
-    getArtistsQuery,
-    getArtistsQueryVariables
-  >(GET_ARTISTS_QUERY, {
-    variables: {
-      getArtistsInput: {
         page,
       },
     },
@@ -252,7 +227,7 @@ const Search: React.FC = () => {
             <div>작가들 : </div>
             {!artistsLoading &&
               artistsData?.getArtists.artists?.map((artist) => (
-                <Link to={`/artist/${artist.id}`}>
+                <Link to={`/artist?id=${artist.id}`}>
                   <ArtistBox>{artist.name}</ArtistBox>
                 </Link>
               ))}
