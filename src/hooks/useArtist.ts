@@ -1,12 +1,9 @@
 import { gql, useQuery } from '@apollo/client';
-import {
-  getArtistsQuery,
-  getArtistsQueryVariables,
-} from '../__generated__/getArtistsQuery';
+import { getArtistsQuery } from '../__generated__/getArtistsQuery';
 
 export const GET_ARTISTS_QUERY = gql`
-  query getArtistsQuery($getArtistsInput: ArtistInput!) {
-    getArtists(input: $getArtistsInput) {
+  query getArtistsQuery {
+    getArtists {
       ok
       error
       totalResults
@@ -19,16 +16,10 @@ export const GET_ARTISTS_QUERY = gql`
 `;
 
 function useArtist() {
-  const { data: artistsData, loading: artistsLoading } = useQuery<
-    getArtistsQuery,
-    getArtistsQueryVariables
-  >(GET_ARTISTS_QUERY, {
-    variables: {
-      getArtistsInput: {},
-    },
-  });
+  const { data: artistsData, loading: artistsLoading } =
+    useQuery<getArtistsQuery>(GET_ARTISTS_QUERY);
 
-  return {artistsData, artistsLoading};
+  return { artistsData, artistsLoading };
 }
 
 export default useArtist;
