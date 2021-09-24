@@ -15,6 +15,7 @@ import PostDetail from './pages/PostDetail';
 import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
 import Search from './pages/Search';
+import Artist from './pages/Artist';
 
 function App() {
   return (
@@ -57,6 +58,11 @@ function App() {
               <Route path={routes.search}>
                 <Layout>
                   <Search />
+                </Layout>
+              </Route>
+              <Route path={routes.artist}>
+                <Layout>
+                  <Artist />
                 </Layout>
               </Route>
               <Route>

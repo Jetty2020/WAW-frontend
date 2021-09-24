@@ -6,5 +6,6 @@ const routes = {
   editPost: '/edit-post/:postId',
   postDetail: '/post/:postId',
   search: '/search',
+  artist: '/artist',
 };
 export default routes;
