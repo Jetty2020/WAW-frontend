@@ -12,11 +12,6 @@ export enum UserRole {
   Manager = "Manager",
 }
 
-export interface ArtistInput {
-  page?: number | null;
-  slug?: string | null;
-}
-
 export interface CreateAccountInput {
   email: string;
   nickname: string;
@@ -69,6 +64,11 @@ export interface PostDetailInput {
 
 export interface PostsInput {
   page?: number | null;
+}
+
+export interface SearchByArtistInput {
+  page?: number | null;
+  artistId: number;
 }
 
 export interface SearchPostInput {

@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../components/PageTitle';
+import { CONFIG_SEARCH_POSTS } from '../constants';
 import useArtist from '../hooks/useArtist';
 import { SearchPostInput } from '../__generated__/globalTypes';
 import {
@@ -200,7 +201,7 @@ const Search: React.FC = () => {
   if (inView === true && !postsLoading) setPage((cur) => cur + 1);
   if (
     more &&
-    (posts.length % 6 !== 0 || postsData?.searchPost.posts?.length === 0)
+    (posts.length % CONFIG_SEARCH_POSTS !== 0 || postsData?.searchPost.posts?.length === 0)
   )
     setMore(false);
   return (
@@ -227,7 +228,7 @@ const Search: React.FC = () => {
             <div>작가들 : </div>
             {!artistsLoading &&
               artistsData?.getArtists.artists?.map((artist) => (
-                <Link to={`/artist?id=${artist.id}`}>
+                <Link to={`/artist?id=${artist.id}`} key={artist.id}>
                   <ArtistBox>{artist.name}</ArtistBox>
                 </Link>
               ))}

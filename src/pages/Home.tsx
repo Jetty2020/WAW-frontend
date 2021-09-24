@@ -12,6 +12,7 @@ import ListContainer from '../components/home/ListContainer';
 import PostList from '../components/home/PostList';
 import NoMorePost from '../components/home/NoMorePost';
 import { POST_FRAGMENT } from '../fragments';
+import { CONFIG_PAGES } from '../constants';
 
 export const POSTS_QUERY = gql`
   query postsQuery($postsInput: PostsInput!) {
@@ -51,7 +52,7 @@ const Home = () => {
     });
   }, [data]);
   if (inView === true && !loading) setPage((cur) => cur + 1);
-  if (more && (posts.length % 9 !== 0 || data?.posts.results?.length === 0))
+  if (more && (posts.length % CONFIG_PAGES !== 0 || data?.posts.results?.length === 0))
     setMore(false);
   return (
     <HomeContainer>

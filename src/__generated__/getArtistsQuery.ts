@@ -3,8 +3,6 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ArtistInput } from "./globalTypes";
-
 // ====================================================
 // GraphQL query operation: getArtistsQuery
 // ====================================================
@@ -16,7 +14,7 @@ export interface getArtistsQuery_getArtists_artists {
 }
 
 export interface getArtistsQuery_getArtists {
-  __typename: "ArtistOutput";
+  __typename: "ArtistsOutput";
   ok: boolean;
   error: string | null;
   totalResults: number | null;
@@ -25,8 +23,4 @@ export interface getArtistsQuery_getArtists {
 
 export interface getArtistsQuery {
   getArtists: getArtistsQuery_getArtists;
-}
-
-export interface getArtistsQueryVariables {
-  getArtistsInput: ArtistInput;
 }
