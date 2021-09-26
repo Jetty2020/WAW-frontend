@@ -20,9 +20,8 @@ const MemuItem = styled.div`
   padding: 0.75rem 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease-in 0s;
   &:hover {
-    background-color: #f7f7f7;
+    background-color: #ebebeb;
   }
 `;
 interface props {
