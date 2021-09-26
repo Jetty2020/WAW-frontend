@@ -5,7 +5,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { useInView } from 'react-intersection-observer';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import PageTitle from '../components/PageTitle';
+import Container from '../components/atoms/Container';
 import { CONFIG_SEARCH_POSTS } from '../constants';
 import useArtist from '../hooks/useArtist';
 import { SearchPostInput } from '../__generated__/globalTypes';
@@ -41,11 +41,6 @@ const SEARCH_POST_QUERY = gql`
   }
 `;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 const SearchCon = styled.div`
   width: 768px;
   margin-top: 2rem;
@@ -205,8 +200,7 @@ const Search: React.FC = () => {
   )
     setMore(false);
   return (
-    <Container>
-      <PageTitle title={word ? word : 'Search'} />
+    <Container pageTitle={word ? word : 'Search'}>
       <SearchCon>
         <form onSubmit={handleSubmit(onSubmit)}>
           <InputBox>

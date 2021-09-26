@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   display: grid;
-  margin: 5rem auto 0;
+  justify-content: center;
+  margin: 3rem auto 5rem;
   grid-template-columns: repeat(3, 350px);
   gap: 4rem 2rem;
-  margin-bottom: 5rem;
   @media screen and (max-width: 1120px) {
     grid-template-columns: repeat(2, 350px);
   }

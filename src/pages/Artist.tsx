@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import Container from '../components/atoms/Container';
 import { CONFIG_SEARCH_POSTS } from '../constants';
 import useArtist from '../hooks/useArtist';
 import {
@@ -37,19 +38,6 @@ const SEARCH_BY_ARTIST = gql`
   }
 `;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const ArtistCon = styled.div`
-  width: 768px;
-  margin-top: 2rem;
-  margin-bottom: 3rem;
-  @media screen and (max-width: 800px) {
-    width: 90%;
-  }
-`;
 const ArtistListCon = styled.div`
   width: 100%;
   display: flex;
@@ -199,82 +187,80 @@ const Artist: React.FC = () => {
     setMore(false);
 
   return (
-    <Container>
-      <ArtistCon>
-        {!artistsLoading && (
-          <ArtistListCon>
-            {artistsData?.getArtists.artists?.map((artist) => (
-              <ArtistBox onClick={() => handleList(artist.id)} key={artist.id}>
-                {artist.name}
-              </ArtistBox>
-            ))}
-          </ArtistListCon>
-        )}
-        <PostContainer>
-          {posts && artistId && (
-            <div>
-              <TotalSearch>
-                총{' '}
-                <TotalSearchNum>
-                  {postsData?.searchByArtist.totalResults}개
-                </TotalSearchNum>
-                의 포스트를 찾았습니다.
-              </TotalSearch>
-              {posts?.map((post) => (
-                <PostCon key={post.id}>
-                  <Link to={`/post/${post.id}`}>
-                    <ImgCon>
-                      <PostImg src={post.imgUrl} />
-                    </ImgCon>
-                  </Link>
-                  <Link to={`/post/${post.id}`}>
-                    <PostTitle>{post.title}</PostTitle>
-                  </Link>
-                  <PostDesc>
-                    {post.desc?.slice(0, 100)}
-                    {post.desc?.slice(100) && '...'}
-                  </PostDesc>
-                  <PostBox>
+    <Container pageTitle="Artists">
+      {!artistsLoading && (
+        <ArtistListCon>
+          {artistsData?.getArtists.artists?.map((artist) => (
+            <ArtistBox onClick={() => handleList(artist.id)} key={artist.id}>
+              {artist.name}
+            </ArtistBox>
+          ))}
+        </ArtistListCon>
+      )}
+      <PostContainer>
+        {posts && artistId && (
+          <div>
+            <TotalSearch>
+              총{' '}
+              <TotalSearchNum>
+                {postsData?.searchByArtist.totalResults}개
+              </TotalSearchNum>
+              의 포스트를 찾았습니다.
+            </TotalSearch>
+            {posts?.map((post) => (
+              <PostCon key={post.id}>
+                <Link to={`/post/${post.id}`}>
+                  <ImgCon>
+                    <PostImg src={post.imgUrl} />
+                  </ImgCon>
+                </Link>
+                <Link to={`/post/${post.id}`}>
+                  <PostTitle>{post.title}</PostTitle>
+                </Link>
+                <PostDesc>
+                  {post.desc?.slice(0, 100)}
+                  {post.desc?.slice(100) && '...'}
+                </PostDesc>
+                <PostBox>
+                  <PostBy>
+                    posted by{' '}
+                    <Link to={`/user/${post.writer.id}`}>
+                      <Name>{post.writer.nickname}</Name>
+                    </Link>
+                  </PostBy>
+                  {post.artist && (
                     <PostBy>
-                      posted by{' '}
-                      <Link to={`/user/${post.writer.id}`}>
-                        <Name>{post.writer.nickname}</Name>
+                      made by{' '}
+                      <Link to={`/made-by/${post.artist.id}`}>
+                        <Name>{post.artist?.name}</Name>
                       </Link>
                     </PostBy>
-                    {post.artist && (
-                      <PostBy>
-                        made by{' '}
-                        <Link to={`/made-by/${post.artist.id}`}>
-                          <Name>{post.artist?.name}</Name>
-                        </Link>
-                      </PostBy>
-                    )}
-                  </PostBox>
-                  <PostBox>
-                    <PostInfo>{`${post?.createdAt.substr(
-                      0,
-                      4
-                    )}년 ${post?.createdAt.substr(
-                      5,
-                      2
-                    )}월 ${post?.createdAt.substr(8, 2)}일`}</PostInfo>
-                    <PostInfo>·</PostInfo>
-                    <PostInfo>{post.likesNum}개의 좋아요</PostInfo>
-                  </PostBox>
-                </PostCon>
-              ))}
-              {!postsLoading && more && <div ref={ref} />}
-            </div>
-          )}
-          {!more && !postsLoading && (
-            <NoMoreData>
-              더 이상 게시물이 없습니다. ({' '}
-              {postsData?.searchByArtist.totalResults} /{' '}
-              {postsData?.searchByArtist.totalResults} )
-            </NoMoreData>
-          )}
-        </PostContainer>
-      </ArtistCon>
+                  )}
+                </PostBox>
+                <PostBox>
+                  <PostInfo>{`${post?.createdAt.substr(
+                    0,
+                    4
+                  )}년 ${post?.createdAt.substr(
+                    5,
+                    2
+                  )}월 ${post?.createdAt.substr(8, 2)}일`}</PostInfo>
+                  <PostInfo>·</PostInfo>
+                  <PostInfo>{post.likesNum}개의 좋아요</PostInfo>
+                </PostBox>
+              </PostCon>
+            ))}
+            {!postsLoading && more && <div ref={ref} />}
+          </div>
+        )}
+        {!more && !postsLoading && (
+          <NoMoreData>
+            더 이상 게시물이 없습니다. ({' '}
+            {postsData?.searchByArtist.totalResults} /{' '}
+            {postsData?.searchByArtist.totalResults} )
+          </NoMoreData>
+        )}
+      </PostContainer>
     </Container>
   );
 };
