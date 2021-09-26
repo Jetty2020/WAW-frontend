@@ -11,6 +11,7 @@ export interface meQuery_me {
   __typename: "User";
   id: number;
   nickname: string;
+  email: string;
 }
 
 export interface meQuery {

@@ -8,6 +8,7 @@ export const ME_QUERY = gql`
     me {
       id
       nickname
+      email
     }
   }
 `;

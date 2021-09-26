@@ -1,5 +1,6 @@
 const routes = {
   home: '/',
+  userProfile: '/user-profile',
   login: '/login',
   join: '/join',
   createPost: '/create-post',

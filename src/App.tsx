@@ -16,6 +16,7 @@ import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
 import Search from './pages/Search';
 import Artist from './pages/Artist';
+import UserProfle from './pages/UserProfile';
 
 function App() {
   return (
@@ -28,6 +29,11 @@ function App() {
               <Route path={routes.home} exact>
                 <Layout>
                   <Home />
+                </Layout>
+              </Route>
+              <Route path={routes.userProfile} exact>
+                <Layout>
+                  <UserProfle />
                 </Layout>
               </Route>
               <Route path={routes.postDetail} exact>
