@@ -15,7 +15,7 @@ export const ME_QUERY = gql`
 
 function useUser() {
   const hasToken = useReactiveVar(isLoggedInVar);
-  const { data } = useQuery<meQuery>(ME_QUERY, {
+  const { data, loading } = useQuery<meQuery>(ME_QUERY, {
     skip: !hasToken,
   });
   useEffect(() => {
@@ -23,6 +23,6 @@ function useUser() {
       logUserOut();
     }
   }, [data]);
-  return { data };
+  return { data, loading };
 }
 export default useUser;
