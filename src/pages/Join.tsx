@@ -73,7 +73,7 @@ const Join = () => {
   };
   return (
     <AuthContainer>
-      <PageTitle title="Join" />
+      <PageTitle title="가입하기" />
       <PageHeader>Join to WAW</PageHeader>
       <FormContainer>
         <Logo margin=" 0 0 1rem" src="/mona.jpeg" />
@@ -88,10 +88,10 @@ const Join = () => {
           <ErrorForm eText={errors.nickname?.message} />
         )}
         {errors.nickname?.type === 'minLength' && (
-          <ErrorForm eText="Username은 4 ~ 13자리 입니다." />
+          <ErrorForm eText="이름은 4 ~ 13자리 입니다." />
         )}
         {errors.nickname?.type === 'maxLength' && (
-          <ErrorForm eText="Username은 4 ~ 13자리 입니다." />
+          <ErrorForm eText="이름은 4 ~ 13자리 입니다." />
         )}
         {errors.password?.message && (
           <ErrorForm eText={errors.password?.message} />
@@ -103,7 +103,7 @@ const Join = () => {
           <ErrorForm eText="비밀번호는 5 ~ 15자리 입니다." />
         )}
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <InputLabel htmlFor="email">Email</InputLabel>
+          <InputLabel htmlFor="email">이메일</InputLabel>
           <Input
             {...register('email', {
               required: '메일이 비어있습니다.',
@@ -115,7 +115,7 @@ const Join = () => {
             type="email"
             className="input"
           />
-          <InputLabel htmlFor="nickname">Username</InputLabel>
+          <InputLabel htmlFor="nickname">이름</InputLabel>
           <Input
             {...register('nickname', {
               required: 'Username이 비어있습니다.',
@@ -127,7 +127,7 @@ const Join = () => {
             type="text"
             className="input"
           />
-          <InputLabel htmlFor="password">Password</InputLabel>
+          <InputLabel htmlFor="password">비밀번호</InputLabel>
           <Input
             {...register('password', {
               required: '비밀번호가 비어있습니다.',
