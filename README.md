@@ -14,7 +14,7 @@
 | **User**       |    Create Account    |                       |  Done!   |
 |                |        Login         |                       |  Done!   |
 |                |     User Profile     |   Get user profile    |   Soon   |
-|                |     Update User      |                       |   Soon   |
+|                |     Update User      |                       |  Done!   |
 |                |                      |        Logout         |  Done!   |
 | **Post**       |    Landing(Home)     |                       |  Done!   |
 |                |     Create Post      |                       |  Done!   |

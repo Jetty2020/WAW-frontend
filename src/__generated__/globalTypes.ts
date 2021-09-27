@@ -49,6 +49,11 @@ export interface EditPostInput {
   postId: number;
 }
 
+export interface EditProfileInput {
+  email?: string | null;
+  nickname?: string | null;
+}
+
 export interface GetCommentsInput {
   postId: number;
 }

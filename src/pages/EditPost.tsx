@@ -186,7 +186,7 @@ const EditPost: React.FC = () => {
               name="title"
               defaultValue={postData?.title}
               style={{ fontSize: '1rem' }}
-              type="title"
+              type="text"
               className="input"
             />
             <LabelBox>
