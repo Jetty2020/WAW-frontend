@@ -1,14 +1,15 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+import Container from '../components/atoms/Container';
+import MyPost from '../components/molecules/PostList';
 
-type Props = {
-
-};
-const PostsByUser: React.FC<Props> = () => {
+const PostsByUser: React.FC = () => {
+  const { userId } = useParams<{ userId: string }>();
   return (
-    <div>
-      PostsByUser
-    </div>
+    <Container pageTitle="a">
+      <MyPost userId={+userId} />
+    </Container>
   );
-}
+};
 
 export default PostsByUser;

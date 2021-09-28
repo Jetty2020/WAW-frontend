@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Container from '../components/atoms/Container';
-import MyPost from '../components/userProfile/MyPost';
+import MyPost from '../components/molecules/PostList';
 import UserInfo from '../components/userProfile/UserInfo';
 import useUser from '../hooks/useUser';
 
@@ -16,7 +16,7 @@ const UserProfile: React.FC = () => {
       {userData && (
         <>
           <UserInfo userData={userData} />
-          <MyPost userData={userData} />
+          <MyPost userId={+userData.me.id} isMe />
         </>
       )}
     </Container>

@@ -4,7 +4,6 @@ import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { CONFIG_SEARCH_POSTS } from '../../constants';
-import { meQuery } from '../../__generated__/meQuery';
 import {
   searchByUserQuery,
   searchByUserQueryVariables,
@@ -17,6 +16,7 @@ const SEARCHBYUSER_QUERY = gql`
       ok
       error
       totalResults
+      userName
       posts {
         id
         imgUrl
@@ -126,8 +126,11 @@ const NoMoreData = styled.div`
   margin-bottom: 5rem;
 `;
 
-type Props = { userData: meQuery };
-const MyPost: React.FC<Props> = ({ userData }) => {
+type Props = {
+  userId: number;
+  isMe?: boolean;
+};
+const MyPost: React.FC<Props> = ({ userId, isMe }) => {
   const [page, setPage] = useState<number>(1);
   const [more, setMore] = useState<boolean>(true);
   const [posts, setPosts] = useState<searchByUserQuery_searchByUser_posts[]>(
@@ -142,7 +145,7 @@ const MyPost: React.FC<Props> = ({ userData }) => {
   >(SEARCHBYUSER_QUERY, {
     variables: {
       searchByUserInput: {
-        userId: userData.me.id,
+        userId,
         page,
       },
     },
@@ -161,11 +164,20 @@ const MyPost: React.FC<Props> = ({ userData }) => {
     setMore(false);
   return (
     <ContentBox>
-      <ProfileTitle>내 게시물</ProfileTitle>
+      {isMe ? (
+        <ProfileTitle>내 게시물</ProfileTitle>
+      ) : (
+        <ProfileTitle>
+          {postsData?.searchByUser.userName &&
+            "'" + postsData?.searchByUser.userName + "'님의 게시물"}
+        </ProfileTitle>
+      )}
       <TotalSearch>
         총{' '}
-        <TotalSearchNum>{postsData?.searchByUser.totalResults}개</TotalSearchNum>
-        의 포스트를 찾았습니다.
+        <TotalSearchNum>
+          {postsData?.searchByUser.totalResults}개
+        </TotalSearchNum>
+        의 포스트가 있습니다.
       </TotalSearch>
       {posts?.map((post) => (
         <PostCon key={post.id}>

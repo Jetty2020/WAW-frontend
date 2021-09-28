@@ -38,6 +38,7 @@ export interface searchByUserQuery_searchByUser {
   ok: boolean;
   error: string | null;
   totalResults: number | null;
+  userName: string;
   posts: searchByUserQuery_searchByUser_posts[] | null;
 }
 
