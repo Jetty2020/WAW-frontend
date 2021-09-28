@@ -116,7 +116,7 @@ const PostList: React.FC<Props> = ({ post }) => {
             <PostBy>
               made by{' '}
               {post.artist ? (
-                <Link to={`/made-by/${post.artist.id}`}>
+                <Link to={`/artist?id=${post.artist.id}`}>
                   <Name>{post.artist?.name}</Name>
                 </Link>
               ) : (
