@@ -13,17 +13,19 @@
 | :------------- | :------------------: | :-------------------: | :------: |
 | **User**       |    Create Account    |                       |  Done!   |
 |                |        Login         |                       |  Done!   |
-|                |     User Profile     |   Get user profile    |   Soon   |
+|                |     User Profile     |    Get my profile     |  Done!   |
 |                |     Update User      |                       |  Done!   |
+|                |     User Detail      |   Get user profile    |  Done!   |
 |                |                      |        Logout         |  Done!   |
 | **Post**       |    Landing(Home)     |                       |  Done!   |
 |                |     Create Post      |                       |  Done!   |
 |                |  Search Post(title)  |                       |  Done!   |
-|                |     Post detail      |    Get Post detail    |  Done!   |
-|                |          "           |      Toggle Like      |  Done!   |
-|                |          "           |      Get Comment      |  Done!   |
-|                |          "           |    Create Comment     |  Done!   |
-|                |          "           |    Delete Comment     |  Done!   |
+|                |  Search Post(User)   |   Get posts by user   |   Soon   |
+|                |     Post detail      |    Get post detail    |  Done!   |
+|                |          "           |      Toggle like      |  Done!   |
+|                |          "           |      Get comment      |  Done!   |
+|                |          "           |    Create comment     |  Done!   |
+|                |          "           |    Delete comment     |  Done!   |
 |                |      Edit Post       |                       |  Done!   |
 |                |     delete Post      |                       |  Done!   |
 |                | Posts sort by artist |                       |  Done!   |

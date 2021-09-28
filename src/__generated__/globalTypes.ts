@@ -76,6 +76,11 @@ export interface SearchByArtistInput {
   artistId: number;
 }
 
+export interface SearchByUserInput {
+  page?: number | null;
+  userId: number;
+}
+
 export interface SearchPostInput {
   page?: number | null;
   query: string;
