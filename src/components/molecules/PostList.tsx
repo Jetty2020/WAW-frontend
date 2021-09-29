@@ -155,7 +155,12 @@ const MyPost: React.FC<Props> = ({ userId, isMe }) => {
       setPosts((cur) => [...cur, post]);
     });
   }, [postsData]);
-  if (inView === true && !postsLoading) setPage((cur) => cur + 1);
+  if (
+    inView === true &&
+    !postsLoading &&
+    page * CONFIG_SEARCH_POSTS === posts.length
+  )
+    setPage((cur) => cur + 1);
   if (
     more &&
     (posts.length % CONFIG_SEARCH_POSTS !== 0 ||
@@ -197,7 +202,7 @@ const MyPost: React.FC<Props> = ({ userId, isMe }) => {
             {post.artist && (
               <PostBy>
                 made by{' '}
-                <Link to={`/made-by/${post.artist.id}`}>
+                <Link to={`/artist?id=${post.artist.id}`}>
                   <Name>{post.artist?.name}</Name>
                 </Link>
               </PostBy>

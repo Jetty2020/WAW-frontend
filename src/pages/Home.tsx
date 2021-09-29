@@ -50,8 +50,12 @@ const Home = () => {
       setPosts((cur) => [...cur, post]);
     });
   }, [data]);
-  if (inView === true && !loading) setPage((cur) => cur + 1);
-  if (more && (posts.length % CONFIG_PAGES !== 0 || data?.posts.results?.length === 0))
+  if (inView === true && !loading && page * CONFIG_PAGES === posts.length)
+    setPage((cur) => cur + 1);
+  if (
+    more &&
+    (posts.length % CONFIG_PAGES !== 0 || data?.posts.results?.length === 0)
+  )
     setMore(false);
   return (
     <Container pageTitle="Home">
