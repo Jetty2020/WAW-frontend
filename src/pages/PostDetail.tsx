@@ -259,7 +259,7 @@ const PostDetail: React.FC = () => {
             </PostedCon>
             <MadeCon>
               {data?.postDetail.post?.artist?.name ? (
-                <Link to={`/made-by/${data?.postDetail.post?.artist?.id}`}>
+                <Link to={`/artist?id=${data?.postDetail.post?.artist?.id}`}>
                   <ArtistName underline>
                     {data?.postDetail.post?.artist?.name}
                   </ArtistName>
