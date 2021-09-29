@@ -1,12 +1,15 @@
-# World Art Works site
+# 'World Art Works' site
 
-## Tech Stack
+## Tech stack
 
 - Frontend
   ![Generic badge](https://img.shields.io/badge/React-17.0.2-61DAFB.svg) ![Generic badge](https://img.shields.io/badge/typescript-4.3.5-3178C6.svg) ![Generic badge](https://img.shields.io/badge/apollo-3.4.7-311C87.svg) ![Generic badge](https://img.shields.io/badge/graphql-15.5.1-E434AA.svg)![Generic badge](https://img.shields.io/badge/Styled_Components-5.3.0-CC6699.svg)
 
----
+## Duration of work
+2021/08/13 ~ 2021/08/28, 2021/09/13 ~ 2021/09/29 (total 5weeks)
 
+## BackEnd
+[Backend github link](https://github.com/Jetty2020/WAW-backend)
 ## Core features
 
 | Classification |         Page         | Function or component | Progress |
@@ -20,7 +23,7 @@
 | **Post**       |    Landing(Home)     |                       |  Done!   |
 |                |     Create Post      |                       |  Done!   |
 |                |  Search Post(title)  |                       |  Done!   |
-|                |  Search Post(User)   |   Get posts by user   |   Soon   |
+|                |  Search Post(User)   |   Get posts by user   |  Done!   |
 |                |     Post detail      |    Get post detail    |  Done!   |
 |                |          "           |      Toggle like      |  Done!   |
 |                |          "           |      Get comment      |  Done!   |
