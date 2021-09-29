@@ -87,11 +87,11 @@ const CreatePost: React.FC = () => {
   }, []);
   const [localUrl, setLocalUrl] = useState<string>('');
 
-  const handleChangeFile = (e: any) => {
+  const handleChangeFile = useCallback((e: any) => {
     const imageFile = e.target.files[0];
     const imageLocalUrl = URL.createObjectURL(imageFile);
     setLocalUrl(imageLocalUrl);
-  };
+  }, []);
   const {
     register,
     getValues,
@@ -100,15 +100,18 @@ const CreatePost: React.FC = () => {
   } = useForm<Iform>({
     mode: 'onChange',
   });
-  const onCompleted = (data: createPostMutation) => {
-    const {
-      createPost: { ok, postId },
-    } = data;
-    if (ok) {
-      setUploading(false);
-      history.push(`/post/${postId}`);
-    }
-  };
+  const onCompleted = useCallback(
+    (data: createPostMutation) => {
+      const {
+        createPost: { ok, postId },
+      } = data;
+      if (ok) {
+        setUploading(false);
+        history.push(`/post/${postId}`);
+      }
+    },
+    [history]
+  );
   const [createPostMutation] = useMutation<
     createPostMutation,
     createPostMutationVariables
@@ -131,7 +134,7 @@ const CreatePost: React.FC = () => {
     maxLength: 1500,
   });
   const [uploading, setUploading] = useState(false);
-  const onSubmit = async () => {
+  const onSubmit = useCallback(async () => {
     try {
       const { title, yearStr, artistName, desc, file } = getValues();
       setUploading(true);
@@ -158,7 +161,7 @@ const CreatePost: React.FC = () => {
     } catch (e) {
       console.log(e);
     }
-  };
+  }, [createPostMutation, getValues]);
   if (!useReactiveVar(isLoggedInVar)) history.push('/');
   return (
     <Container>

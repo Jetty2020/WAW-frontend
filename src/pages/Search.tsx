@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useInView } from 'react-intersection-observer';
@@ -170,12 +170,12 @@ const Search: React.FC = () => {
   const { register, getValues, handleSubmit } = useForm<SearchPostInput>({
     mode: 'onChange',
   });
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     const { query } = getValues();
     setPosts([]);
     setSearchQuery(query);
     history.push(`/search?q=${query}`);
-  };
+  }, [getValues, history]);
 
   const { data: postsData, loading: postsLoading } = useQuery<
     searchPostQuery,
@@ -196,9 +196,10 @@ const Search: React.FC = () => {
   if (inView === true && !postsLoading) setPage((cur) => cur + 1);
   if (
     more &&
-    (posts.length % CONFIG_SEARCH_POSTS !== 0 || postsData?.searchPost.posts?.length === 0)
+    (posts.length % CONFIG_SEARCH_POSTS !== 0 ||
+      postsData?.searchPost.posts?.length === 0)
   )
-    setMore(false);
+    setMore(() => false);
   return (
     <Container pageTitle={word ? word : 'Search'}>
       <SearchCon>

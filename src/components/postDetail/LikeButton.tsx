@@ -1,5 +1,5 @@
 import { gql, useMutation } from '@apollo/client';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { BsHeartFill, BsHeart } from 'react-icons/bs';
 import styled from 'styled-components';
 import { client } from '../../apollo';
@@ -59,28 +59,31 @@ type Props = {
   postId: number;
 };
 const LikeButton: React.FC<Props> = ({ data, postId }) => {
-  const onCompletedToggleLike = (toggleLikeData: toggleLikeMutation) => {
-    const {
-      toggleLike: { ok },
-    } = toggleLikeData;
-    if (ok) {
-      const postIdCashe = `Post:${data.postDetail.post?.id}`;
-      client.cache.modify({
-        id: postIdCashe,
-        fields: {
-          isLike(prev) {
-            return !prev;
+  const onCompletedToggleLike = useCallback(
+    (toggleLikeData: toggleLikeMutation) => {
+      const {
+        toggleLike: { ok },
+      } = toggleLikeData;
+      if (ok) {
+        const postIdCashe = `Post:${data.postDetail.post?.id}`;
+        client.cache.modify({
+          id: postIdCashe,
+          fields: {
+            isLike(prev) {
+              return !prev;
+            },
+            likesNum(prev) {
+              if (data?.postDetail.post?.isLike) {
+                return prev - 1;
+              }
+              return prev + 1;
+            },
           },
-          likesNum(prev) {
-            if (data?.postDetail.post?.isLike) {
-              return prev - 1;
-            }
-            return prev + 1;
-          },
-        },
-      });
-    }
-  };
+        });
+      }
+    },
+    [data.postDetail.post]
+  );
 
   const [toggleLikeMutation] = useMutation<
     toggleLikeMutation,

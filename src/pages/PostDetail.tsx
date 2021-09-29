@@ -1,5 +1,5 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTitle from '../components/PageTitle';
@@ -174,24 +174,27 @@ const PostDetail: React.FC = () => {
       },
     }
   );
-  const onCompleted = (data: deletePostMutation) => {
-    const {
-      deletePost: { ok },
-    } = data;
-    if (ok) {
-      const queryId = `Root_Query`;
-      client.cache.modify({
-        id: queryId,
-        fields: {
-          posts(prev) {
-            console.log(prev);
-            return prev;
+  const onCompleted = useCallback(
+    (data: deletePostMutation) => {
+      const {
+        deletePost: { ok },
+      } = data;
+      if (ok) {
+        const queryId = `Root_Query`;
+        client.cache.modify({
+          id: queryId,
+          fields: {
+            posts(prev) {
+              console.log(prev);
+              return prev;
+            },
           },
-        },
-      });
-      history.push(`/`);
-    }
-  };
+        });
+        history.push(`/`);
+      }
+    },
+    [history]
+  );
   const [deletePostMutation] = useMutation<
     deletePostMutation,
     deletePostMutationVariables
@@ -209,9 +212,9 @@ const PostDetail: React.FC = () => {
     awaitRefetchQueries: true,
     onCompleted,
   });
-  const updatePost = () => {
+  const updatePost = useCallback(() => {
     history.push(`/edit-post/${postId}`);
-  };
+  }, [history, postId]);
   const deletePost = () => {
     deletePostMutation({
       variables: {

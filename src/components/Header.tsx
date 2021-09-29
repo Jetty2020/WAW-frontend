@@ -113,7 +113,10 @@ const Header: React.FC = () => {
             <Link to="/create-post">
               <CreatePostBtn>새 글 작성</CreatePostBtn>
             </Link>
-            <DropDownIcon size="1.4rem" onClick={() => setShowMenu(true)} />
+            <DropDownIcon
+              size="1.4rem"
+              onClick={() => setShowMenu(() => true)}
+            />
           </LogBox>
         ) : (
           <LogBox>

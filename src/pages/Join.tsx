@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../components/PageTitle';
@@ -39,14 +39,17 @@ const Join = () => {
   } = useForm<CreateAccountInput>({
     mode: 'onChange',
   });
-  const onCompleted = (data: createAccountMutation) => {
-    const {
-      createAccount: { ok },
-    } = data;
-    if (ok) {
-      history.push('/login');
-    }
-  };
+  const onCompleted = useCallback(
+    (data: createAccountMutation) => {
+      const {
+        createAccount: { ok },
+      } = data;
+      if (ok) {
+        history.push('/login');
+      }
+    },
+    [history]
+  );
   const [
     createAccountMutation,
     { data: createAccountMutationResult, loading },
@@ -56,7 +59,7 @@ const Join = () => {
       onCompleted,
     }
   );
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     if (!loading) {
       const { email, password, nickname } = getValues();
       createAccountMutation({
@@ -70,7 +73,7 @@ const Join = () => {
         },
       });
     }
-  };
+  }, [createAccountMutation, loading, getValues]);
   return (
     <AuthContainer>
       <PageTitle title="가입하기" />

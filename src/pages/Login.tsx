@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../components/PageTitle';
@@ -41,24 +41,27 @@ const Login = () => {
   } = useForm<LoginInput>({
     mode: 'onChange',
   });
-  const onCompleted = (data: loginMutation) => {
-    const {
-      login: { ok, token },
-    } = data;
-    if (ok && token) {
-      localStorage.setItem(LOCALSTORAGE_TOKEN, token);
-      authTokenVar(token);
-      isLoggedInVar(true);
-      history.push('/');
-    }
-  };
+  const onCompleted = useCallback(
+    (data: loginMutation) => {
+      const {
+        login: { ok, token },
+      } = data;
+      if (ok && token) {
+        localStorage.setItem(LOCALSTORAGE_TOKEN, token);
+        authTokenVar(token);
+        isLoggedInVar(true);
+        history.push('/');
+      }
+    },
+    [history]
+  );
   const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
     loginMutation,
     loginMutationVariables
   >(LOGIN_MUTATION, {
     onCompleted,
   });
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     if (!loading) {
       const { email, password } = getValues();
       loginMutation({
@@ -70,7 +73,7 @@ const Login = () => {
         },
       });
     }
-  };
+  }, [getValues, loading, loginMutation]);
   return (
     <AuthContainer>
       <PageTitle title="Login" />
@@ -88,10 +91,10 @@ const Login = () => {
           <ErrorForm eText={errors.password?.message} />
         )}
         {errors.password?.type === 'minLength' && (
-          <ErrorForm eText='비밀번호는 5 ~ 15자리 입니다.' />
+          <ErrorForm eText="비밀번호는 5 ~ 15자리 입니다." />
         )}
         {errors.password?.type === 'maxLength' && (
-          <ErrorForm eText='비밀번호는 5 ~ 15자리 입니다.' />
+          <ErrorForm eText="비밀번호는 5 ~ 15자리 입니다." />
         )}
         <Form onSubmit={handleSubmit(onSubmit)}>
           <InputLabel htmlFor="email">Email</InputLabel>

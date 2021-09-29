@@ -112,14 +112,17 @@ const EditPost: React.FC = () => {
   } = useForm<Iform>({
     mode: 'onChange',
   });
-  const onCompleted = async (data: editPostMutation) => {
-    const {
-      editPost: { ok },
-    } = data;
-    if (ok) {
-      history.push(`/post/${postId}`);
-    }
-  };
+  const onCompleted = useCallback(
+    async (data: editPostMutation) => {
+      const {
+        editPost: { ok },
+      } = data;
+      if (ok) {
+        history.push(`/post/${postId}`);
+      }
+    },
+    [history, postId]
+  );
   const [editPostMutation] = useMutation<
     editPostMutation,
     editPostMutationVariables
@@ -163,7 +166,7 @@ const EditPost: React.FC = () => {
   useEffect(() => {
     if (!loading && userData?.me.id !== data?.postDetail.post?.writer?.id)
       history.push(`/post/${postId}`);
-  });
+  }, [data?.postDetail.post, history, loading, postId, userData]);
   return (
     <Container>
       <PageTitle title="Edit-Post" />

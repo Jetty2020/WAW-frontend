@@ -102,28 +102,18 @@ const CreateCommentForm: React.FC<Props> = ({ postId, totalResults }) => {
     required: '댓글이 비어있습니다.',
     maxLength: 500,
   });
-  const onSubmit = () => {
-    const { content } = getValues();
-    createCommentMutation({
-      variables: {
-        createCommentInput: {
-          postId,
-          content,
-        },
-      },
-    });
-  };
-  const onCompletedCreateComment = (
-    createCommentData: createCommentMutation
-  ) => {
-    const {
-      createComment: { ok },
-    } = createCommentData;
-    if (ok) {
-      setValue('content', '');
-      handleResizeHeight();
-    }
-  };
+  const onCompletedCreateComment = useCallback(
+    (createCommentData: createCommentMutation) => {
+      const {
+        createComment: { ok },
+      } = createCommentData;
+      if (ok) {
+        setValue('content', '');
+        handleResizeHeight();
+      }
+    },
+    [setValue, handleResizeHeight]
+  );
   const [createCommentMutation] = useMutation<
     createCommentMutation,
     createCommentMutationVariables
@@ -140,6 +130,17 @@ const CreateCommentForm: React.FC<Props> = ({ postId, totalResults }) => {
       },
     ],
   });
+  const onSubmit = useCallback(() => {
+    const { content } = getValues();
+    createCommentMutation({
+      variables: {
+        createCommentInput: {
+          postId,
+          content,
+        },
+      },
+    });
+  }, [createCommentMutation, getValues, postId]);
   return (
     <CommentForm onSubmit={handleSubmit(onSubmit)}>
       <CommnetFormHeader>{totalResults}개의 댓글</CommnetFormHeader>

@@ -1,5 +1,5 @@
 import { gql, useMutation } from '@apollo/client';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useUser from '../../hooks/useUser';
@@ -90,7 +90,7 @@ const Comment: React.FC<Props> = ({ data, postId }) => {
       },
     ],
   });
-  const deleteComment = () => {
+  const deleteComment = useCallback(() => {
     deleteCommentMutation({
       variables: {
         deleteCommentInput: {
@@ -98,7 +98,7 @@ const Comment: React.FC<Props> = ({ data, postId }) => {
         },
       },
     });
-  };
+  }, [deleteCommentMutation, data.id]);
   return (
     <CommentList>
       {modalShow && (
@@ -117,7 +117,7 @@ const Comment: React.FC<Props> = ({ data, postId }) => {
           )}월 ${data.createdAt.substr(8, 2)}일`}</DateBox>
         </div>
         {data.user.id === userData?.me.id && (
-          <DeleteCon onClick={() => setModalShow(true)}>삭제</DeleteCon>
+          <DeleteCon onClick={() => setModalShow(() => true)}>삭제</DeleteCon>
         )}
       </InfoBox>
       <Content>{data.content}</Content>

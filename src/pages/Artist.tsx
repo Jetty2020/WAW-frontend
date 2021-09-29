@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -166,17 +166,20 @@ const Artist: React.FC = () => {
     postsData?.searchByArtist.posts?.forEach((post) => {
       setPosts((cur) => [...cur, post]);
     });
-    setHandlePage(true);
+    setHandlePage(() => true);
   }, [postsData]);
-  const handleList = (id: number) => {
-    setArtistId(id);
-    setPosts([]);
-    setPage(1);
-    setMore(true);
-    history.push(`/artist?id=${id}`);
-  };
+  const handleList = useCallback(
+    (id: number) => {
+      setArtistId(() => id);
+      setPosts(() => []);
+      setPage(() => 1);
+      setMore(() => true);
+      history.push(`/artist?id=${id}`);
+    },
+    [history]
+  );
   if (inView === true && !postsLoading && handlePage) {
-    setHandlePage(false);
+    setHandlePage(() => false);
     setPage((cur) => cur + 1);
   }
   if (
@@ -184,7 +187,7 @@ const Artist: React.FC = () => {
     (posts.length % CONFIG_SEARCH_POSTS !== 0 ||
       postsData?.searchByArtist.posts?.length === 0)
   )
-    setMore(false);
+    setMore(() => false);
 
   return (
     <Container pageTitle="Artists">

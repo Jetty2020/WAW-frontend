@@ -166,7 +166,7 @@ const MyPost: React.FC<Props> = ({ userId, isMe }) => {
     (posts.length % CONFIG_SEARCH_POSTS !== 0 ||
       postsData?.searchByUser.posts?.length === 0)
   )
-    setMore(false);
+    setMore(() => false);
   return (
     <ContentBox>
       {isMe ? (

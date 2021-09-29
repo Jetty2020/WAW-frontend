@@ -56,7 +56,7 @@ const Home = () => {
     more &&
     (posts.length % CONFIG_PAGES !== 0 || data?.posts.results?.length === 0)
   )
-    setMore(false);
+    setMore(() => false);
   return (
     <Container pageTitle="Home">
       {posts.length !== 0 ? (
