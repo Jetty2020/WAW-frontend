@@ -7,7 +7,7 @@ import InputLabel from '../components/auth/InputLabel';
 import Input from '../components/atoms/Input';
 import Button from '../components/atoms/Button';
 import { useForm } from 'react-hook-form';
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, useReactiveVar } from '@apollo/client';
 import { CreatePostInput } from '../__generated__/globalTypes';
 import DescInput from '../components/createPost/DescInput';
 import {
@@ -16,6 +16,7 @@ import {
 } from '../__generated__/createPostMutation';
 import { useHistory } from 'react-router-dom';
 import { POSTS_QUERY } from './Home';
+import { isLoggedInVar } from '../apollo';
 
 const CREATEPOST_MUTATION = gql`
   mutation createPostMutation($createPostInput: CreatePostInput!) {
@@ -158,6 +159,7 @@ const CreatePost: React.FC = () => {
       console.log(e);
     }
   };
+  if (!useReactiveVar(isLoggedInVar)) history.push('/');
   return (
     <Container>
       <PageTitle title="Create-Post" />
