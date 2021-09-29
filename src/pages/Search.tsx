@@ -262,7 +262,7 @@ const Search: React.FC = () => {
                   {post.artist && (
                     <PostBy>
                       made by{' '}
-                      <Link to={`/made-by/${post.artist.id}`}>
+                      <Link to={`/artist?id=${post.artist.id}`}>
                         <Name>{post.artist?.name}</Name>
                       </Link>
                     </PostBy>

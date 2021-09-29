@@ -233,10 +233,7 @@ const Artist: React.FC = () => {
                   </PostBy>
                   {post.artist && (
                     <PostBy>
-                      made by{' '}
-                      <Link to={`/made-by/${post.artist.id}`}>
-                        <Name>{post.artist?.name}</Name>
-                      </Link>
+                      made by <Name>{post.artist?.name}</Name>
                     </PostBy>
                   )}
                 </PostBox>
