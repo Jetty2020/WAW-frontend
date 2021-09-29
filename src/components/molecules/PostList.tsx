@@ -130,7 +130,7 @@ type Props = {
   userId: number;
   isMe?: boolean;
 };
-const MyPost: React.FC<Props> = ({ userId, isMe }) => {
+const PostList: React.FC<Props> = ({ userId, isMe }) => {
   const [page, setPage] = useState<number>(1);
   const [more, setMore] = useState<boolean>(true);
   const [posts, setPosts] = useState<searchByUserQuery_searchByUser_posts[]>(
@@ -232,4 +232,4 @@ const MyPost: React.FC<Props> = ({ userId, isMe }) => {
   );
 };
 
-export default MyPost;
+export default PostList;
