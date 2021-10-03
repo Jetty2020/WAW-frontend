@@ -48,13 +48,16 @@ const ArtistListCon = styled.div`
   background-color: ${(props) => props.theme.color.white};
   box-shadow: 0 5px 18px -7px rgba(0, 0, 0, 1);
 `;
-const ArtistBox = styled.div`
+interface IArtistBoxProps {
+  checked?: boolean;
+}
+const ArtistBox = styled.div<IArtistBoxProps>`
   font-size: 0.875rem;
   padding: 0.75rem 1rem;
   margin: 0.5rem;
   border-radius: 2.5rem;
-  background-color: rgb(241, 243, 245);
-  color: rgb(12, 166, 120);
+  background-color: ${(props) => (props.checked ? 'rgb(22, 196, 144)' : 'rgb(241, 243, 245)')};
+  color: ${(props) => (props.checked ? '#FAFAFA' : 'rgb(12, 166, 120)')};
   cursor: pointer;
 `;
 const PostContainer = styled.div`
@@ -194,7 +197,11 @@ const Artist: React.FC = () => {
       {!artistsLoading && (
         <ArtistListCon>
           {artistsData?.getArtists.artists?.map((artist) => (
-            <ArtistBox onClick={() => handleList(artist.id)} key={artist.id}>
+            <ArtistBox
+              onClick={() => handleList(artist.id)}
+              key={artist.id}
+              checked={artistId === artist.id}
+            >
               {artist.name}
             </ArtistBox>
           ))}
