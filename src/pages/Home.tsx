@@ -12,6 +12,7 @@ import NoMorePost from '../components/home/NoMorePost';
 import { POST_FRAGMENT } from '../fragments';
 import { CONFIG_PAGES } from '../constants';
 import Container from '../components/atoms/Container';
+import Skeleton from '../components/home/Skeleton';
 
 export const POSTS_QUERY = gql`
   query postsQuery($postsInput: PostsInput!) {
@@ -59,12 +60,29 @@ const Home = () => {
     setMore(() => false);
   return (
     <Container pageTitle="Home">
+      {loading && posts.length === 0 && (
+        <ListContainer>
+          {Array(CONFIG_PAGES)
+            .fill(0)
+            .map(() => (
+              <Skeleton />
+            ))}
+        </ListContainer>
+      )}
       {posts.length !== 0 ? (
         <ListContainer>
           {posts.map((post) => (
             <PostList post={post} key={post.id} />
           ))}
-          {!loading && data && more ? <div ref={ref} /> : null}
+          {!loading && data && more ? <div ref={ref} /> : more ? (
+        <ListContainer>
+          {Array(CONFIG_PAGES)
+            .fill(0)
+            .map(() => (
+              <Skeleton />
+            ))}
+        </ListContainer>
+      ) : null}
         </ListContainer>
       ) : null}
       {!more ? (

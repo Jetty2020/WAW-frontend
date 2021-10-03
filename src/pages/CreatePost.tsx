@@ -171,12 +171,12 @@ const CreatePost: React.FC = () => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <LabelBox>
             <InputLabel htmlFor="title">제목</InputLabel>
-            <FormCondition>(필수, 최대 13글자)</FormCondition>
+            <FormCondition>(필수, 최대 15글자)</FormCondition>
           </LabelBox>
           <Input
             {...register('title', {
               required: '제목이 비어있습니다.',
-              maxLength: 13,
+              maxLength: 15,
             })}
             id="title"
             name="title"
