@@ -18,6 +18,7 @@ import { POSTS_QUERY } from './Home';
 import { client } from '../apollo';
 import DeleteModal from '../components/postDetail/DeleteModal';
 import useUser from '../hooks/useUser';
+import NarrowLikeBtn from '../components/postDetail/NarrowLikeBtn';
 
 export const POST_DETAIL_QUERY = gql`
   query postDetailQuery($postInput: PostDetailInput!) {
@@ -283,6 +284,7 @@ const PostDetail: React.FC = () => {
               <EditBtn onClick={() => setModalShow(true)}>삭제</EditBtn>
             </EditBox>
           )}
+            <NarrowLikeBtn data={data} postId={+postId} />
           <ImgCon>
             <PostImg src={data?.postDetail.post?.imgUrl} />
           </ImgCon>

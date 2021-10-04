@@ -1,6 +1,6 @@
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import React, { useCallback } from 'react';
-import { BsHeartFill, BsHeart } from 'react-icons/bs';
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import styled from 'styled-components';
 import { client } from '../../apollo';
 import { postDetailQuery } from '../../__generated__/postDetailQuery';
@@ -8,63 +8,35 @@ import {
   toggleLikeMutation,
   toggleLikeMutationVariables,
 } from '../../__generated__/toggleLikeMutation';
+import { TOGGLE_LIKE_MUTATION } from './LikeButton';
 
-export const TOGGLE_LIKE_MUTATION = gql`
-  mutation toggleLikeMutation($toggleLikeInput: ToggleLikeInput!) {
-    toggleLike(input: $toggleLikeInput) {
-      ok
-      error
-    }
-  }
-`;
-
-const LikeBtnCon = styled.div`
+const Container = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 0.5rem;
-  padding-bottom: 1rem;
-  position: fixed;
-  top: 35%;
-  left: 10%;
-  width: 4rem;
-  border-radius: 2rem;
-  background-color: #eff1f2;
-  @media screen and (max-width: 950px) {
-    left: 5%;
-  }
-  @media screen and (max-width: 850px) {
+  @media screen and (min-width: 851px) {
     display: none;
   }
 `;
-
-const LikeBtn = styled.button`
+interface ILikeBtnProps {
+  isLike?: boolean;
+}
+const LikeBtn = styled.div<ILikeBtnProps>`
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 3rem;
-  height: 3rem;
-  border: 1px solid gray;
-  border-radius: 1.5rem;
-  background-color: ${(props) => props.theme.color.white};
-  cursor: pointer;
-  &:hover {
-    border-color: ${(props) => props.theme.color.red};
-    color: ${(props) => props.theme.color.red};
-  }
+  color: ${(props) => (props.isLike ? '#FAFAFA' : '#a7a7a7')};
+  padding: 0.2rem 1rem;
+  border-radius: 1.4rem;
+  border: ${(props) =>
+    !props.isLike ? '1.5px solid #a7a7a7' : '1.5px solid rgb(22, 196, 144)'};
+  background-color: ${(props) => props.isLike && 'rgb(22, 196, 144)'};
 `;
-
 const LikeNum = styled.div`
-  margin-top: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
+  margin-left: 0.5rem;
 `;
-
 type Props = {
   data: postDetailQuery;
   postId: number;
 };
-const LikeButton: React.FC<Props> = ({ data, postId }) => {
+const NarrowLikeBtn: React.FC<Props> = ({ data, postId, children }) => {
   const onCompletedToggleLike = useCallback(
     (toggleLikeData: toggleLikeMutation) => {
       const {
@@ -101,17 +73,17 @@ const LikeButton: React.FC<Props> = ({ data, postId }) => {
     onCompleted: onCompletedToggleLike,
   });
   return (
-    <LikeBtnCon>
-      <LikeBtn onClick={() => toggleLikeMutation()}>
+    <Container onClick={() => toggleLikeMutation()}>
+      <LikeBtn isLike={data?.postDetail.post?.isLike}>
         {data?.postDetail.post?.isLike ? (
-          <BsHeartFill size="1.5rem" />
+          <BsHeartFill color="white" />
         ) : (
-          <BsHeart size="1.5rem" />
+          <BsHeart />
         )}
+        <LikeNum>{data?.postDetail.post?.likesNum}</LikeNum>
       </LikeBtn>
-      <LikeNum>{data?.postDetail.post?.likesNum}</LikeNum>
-    </LikeBtnCon>
+    </Container>
   );
 };
 
-export default LikeButton;
+export default NarrowLikeBtn;
