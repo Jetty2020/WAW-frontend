@@ -132,6 +132,7 @@ const EditBox = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 1rem;
+  margin-bottom: -0.5rem;
 `;
 const EditBtn = styled.button`
   margin-left: 1rem;

@@ -23,6 +23,7 @@ const LikeBtn = styled.div<ILikeBtnProps>`
   display: flex;
   align-items: center;
   color: ${(props) => (props.isLike ? '#FAFAFA' : '#a7a7a7')};
+  margin-top: 0.5rem;
   padding: 0.2rem 1rem;
   border-radius: 1.4rem;
   border: ${(props) =>
